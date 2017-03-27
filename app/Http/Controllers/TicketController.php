@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TicketStore;
+use App\Ticket;
+use App\TicketReply;
 use Auth;
-use \App\Ticket;
-use \App\TicketReply;
-use \App\Http\Requests\TicketStore;
-use Illuminate\Http\Request;
 
 
 class TicketController extends Controller
@@ -46,6 +45,14 @@ class TicketController extends Controller
     {
         Ticket::where('id',$id)->forceDelete();
     }
+
+    /*
+     * Creates ticket reply
+     *
+     * @param int $id ticket id
+     *
+     * @return redirect
+     */
 
     public function reply($id)
     {

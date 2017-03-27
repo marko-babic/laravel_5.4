@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileUpload;
+use App\Screenshot;
 use Auth;
-use \App\Http\Requests\FileUpload;
-use \App\Screenshot;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -53,12 +53,6 @@ class FileController extends Controller
         return response()->json(['response' => 'success']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

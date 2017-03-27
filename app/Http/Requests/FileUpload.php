@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests;
 
-use \App\Screenshot;
+use App\Screenshot;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FileUpload extends FormRequest
 {
 
+    /*
+     * @return boolean
+     */
     public function authorize()
     {
         return Screenshot::canupload();
