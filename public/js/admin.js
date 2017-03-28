@@ -5,7 +5,7 @@ function checkDelete(id) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: t_del + id,
+            url: t_del + '/' +id,
             success: function(result) {
                 location.reload();
             }
@@ -46,7 +46,7 @@ function Approve(id) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: approve + id,
+            url: approve + '/' + id,
             success: function(result) {
                 location.reload();
             }
@@ -61,7 +61,7 @@ function removePost(id){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: r_post + id,
+            url: r_post + '/' + id,
             success: function(result) {
                 location.reload();
             }

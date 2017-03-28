@@ -19,10 +19,10 @@
 
 @section('admin_scripts')
 <script>
-    var t_del = "{{secure_url('ticket/reply/')}}";
-    var posts_js = "{{secure_url('posts')}}" ;
-    var approve = "{{secure_url('screenshot')}}" ;
-    var r_post = "{{secure_url('posts/')}}" ;
+    var t_del = "{{url('ticket')}}";
+    var posts_js = "{{route('posts.index')}}" ;
+    var approve = "{{url('screenshot')}}" ;
+    var r_post = "{{url('posts')}}" ;
 </script>
 <script src="{{ asset('js/admin.js') }}"></script>
 <script src="{{ asset('js/jquery-te-1.4.0.min.js') }}"></script>
