@@ -5,7 +5,7 @@ function checkDelete(id) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/ticket/' + id,
+            url: t_del + id,
             success: function(result) {
                 location.reload();
             }
@@ -18,7 +18,7 @@ function getPosts() {
     if(!display.is(':visible')) {
         $.ajax({
             type: 'GET',
-            url: '/posts',
+            url: posts_js,
             success: function (data) {
                 var posts_html = '';
 
@@ -46,7 +46,7 @@ function Approve(id) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/screenshot/' + id,
+            url: approve + id,
             success: function(result) {
                 location.reload();
             }
@@ -61,7 +61,7 @@ function removePost(id){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/posts/' + id,
+            url: r_post + id,
             success: function(result) {
                 location.reload();
             }

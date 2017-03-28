@@ -2,7 +2,7 @@
 
 @section('admin_main')
     <div style="padding: 40px;">
-        <form action="/posts" method="post">
+        <form action="{{secure_url('posts')}}" method="post">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="title">Title</label>

@@ -18,6 +18,12 @@
 @endsection
 
 @section('admin_scripts')
+<script>
+    var t_del = "{{secure_url('ticket/reply/')}}";
+    var posts_js = "{{secure_url('posts')}}" ;
+    var approve = "{{secure_url('screenshot')}}" ;
+    var r_post = "{{secure_url('posts/')}}" ;
+</script>
 <script src="{{ asset('js/admin.js') }}"></script>
 <script src="{{ asset('js/jquery-te-1.4.0.min.js') }}"></script>
 @endsection

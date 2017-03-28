@@ -17,7 +17,8 @@
         Submitted:
         <ul> {{$info->created_at}} </ul>
         Ticket status:
-        <form action="/ticket/reply/{{$info->id}}" method="post">
+
+        <form action="{{secure_url('posts/reply',[$info->id])}}" method="post">
             {{ csrf_field() }}
             <div class="form-group">
                 <select class="form-control" name="status">
