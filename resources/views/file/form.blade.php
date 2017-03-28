@@ -1,4 +1,4 @@
-<form action="/screenshot" method="post" enctype="multipart/form-data">
+<form action="{{secure_url('screenshot')}}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="form-group">
         <label for="description"> Screenshot description: </label>

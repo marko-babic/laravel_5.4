@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('lastactive');
             $table->smallInteger('access_level');
-            $table->smallInteger('lastSever');
+            $table->smallInteger('last_server');
             $table->tinyInteger('admin');
             $table->string('displayname');
             $table->rememberToken();
