@@ -1,4 +1,4 @@
-<form action="{{secure_url('ticket')}}" method="post">
+<form action="{{route('ticket.store')}}" method="post">
     {{ csrf_field() }}
      <div class="form-group">
         <label for="title">Reason</label>

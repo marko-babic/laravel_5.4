@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'lastactive' => 0,
             'admin' => 0,
             'access_level' => 0,
-            'last_server' => 1,
+            'lastServer' => 1,
             'password' => base64_encode(sha1($data['password'],true)),
         ]);
     }
