@@ -9,10 +9,6 @@ class TicketReply extends Model
     protected $fillable = [
         'ticket_id','content','account_id'
     ];
-    public function tickets()
-    {
-        return $this->belongsTo('\App\Ticket');
-    }
 
     public static function cansubmitreply($id)
     {
@@ -25,5 +21,20 @@ class TicketReply extends Model
                 return true;
             }
         }
+
+        return false;
+    }
+
+    /*
+     * Check whether user can submit reply to the active ticket
+     *
+     * @param integer $id ticket id
+     *
+     * @return boolean
+     */
+
+    public function tickets()
+    {
+        return $this->belongsTo('\App\Ticket');
     }
 }

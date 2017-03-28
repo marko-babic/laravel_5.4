@@ -10,6 +10,11 @@ class Screenshot extends Model
         'description', 'path', 'account_id','votes','approved'
     ];
 
+    /*
+     * Check whether user can upload screenshot (depends on the custom.conf )
+     *
+     * @return boolean
+     */
     public static function canupload()
     {
         $last_upload = self::where('account_id', \Auth::User()->id)->orderBy('created_at','desc')->first();
@@ -23,13 +28,13 @@ class Screenshot extends Model
         return true;
     }
 
-    public function user()
-    {
-        return $this->belongsTo('\App\User','account_id');
-    }
-
     public static function screens()
     {
-       return self::with(['user'])->get();
+        return self::with(['user'])->get();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('\App\User', 'account_id');
     }
 }

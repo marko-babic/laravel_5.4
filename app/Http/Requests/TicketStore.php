@@ -2,11 +2,15 @@
 
 namespace App\Http\Requests;
 
-use \App\Ticket;
+use App\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TicketStore extends FormRequest
 {
+
+    /*
+     * @return boolean
+     */
 
     public function authorize()
     {
