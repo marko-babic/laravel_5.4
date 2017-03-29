@@ -24,7 +24,7 @@ function getPosts() {
 
                 data.forEach(function (post) {
                     posts_html += '<div class="row">';
-                    posts_html += '<div class="col-md-5"> <ul> <a href="/posts/' + post.id + '/edit">' + post.title + '</a></ul></div>';
+                    posts_html += '<div class="col-md-5"> <ul> <a href="' + posts_js + '/' + post.id + '/edit">' + post.title + '</a></ul></div>';
                     posts_html += '<div class="col-md-5">' + '<ul>' + post.created_at + '</ul></div>';
                     posts_html += '<div class="col-md-2"><span onClick="removePost(' + post.id  + ')" title="Remove post" class="remove-post glyphicon glyphicon-remove"> </span></div>';
                     posts_html += '</div>';
