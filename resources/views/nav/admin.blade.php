@@ -11,7 +11,7 @@
                 <div class="quick" onclick="getPosts()"> <span class="glyphicon glyphicon-chevron-down"> </span> Edit Posts</div>
                 <div id="displayposts" class="content" style="display:none;"></div>
             </div>
-            <div class="quick"> <a href="/ticket">Tickets</a></div>
+            <div class="quick"> <a href="{{route('ticket.index')}}">Tickets</a></div>
             <div class="quick"> <a href="{{route('screenshot.index')}}">Screenshots</a></div>
         </div>
     </div>

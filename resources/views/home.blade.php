@@ -66,7 +66,11 @@
                             @include('tickets.reply-form')
                         @endif
                     @else
-                        @include('tickets.form')
+                        @if($info["cansubmit"])
+                            @include('tickets.form')
+                        @else
+                            Only one ticket per (x) days.
+                        @endif
                     @endif
                     </div>
                 </div>

@@ -21,6 +21,7 @@ class HomeController extends Controller
         } else {
             $info["ticket"] = Ticket::info();
             $info["screenshot"] = Screenshot::canupload();
+            $info["cansubmit"] = Ticket::cansubmit();
 
             if(!$info["screenshot"])
                 $info["screenshot_time"] = Screenshot::where('account_id', Auth::User()->id)->orderBy('created_at','desc')->first();
