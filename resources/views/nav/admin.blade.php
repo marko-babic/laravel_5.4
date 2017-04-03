@@ -18,12 +18,7 @@
 @endsection
 
 @section('admin_scripts')
-<script>
-    var t_del = "{{url('ticket')}}";
-    var posts_js = "{{route('posts.index')}}" ;
-    var approve = "{{url('screenshot')}}" ;
-    var r_post = "{{url('posts')}}" ;
-</script>
+    @include('js.admin-variables')
 <script src="{{ asset('js/admin.js') }}"></script>
 <script src="{{ asset('js/jquery-te-1.4.0.min.js') }}"></script>
 @endsection

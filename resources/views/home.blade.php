@@ -41,12 +41,13 @@
             <div class="news">
                 <div class="title cp" data-toggle="collapse" data-target="#uploadfile"> <span class="glyphicon glyphicon-chevron-down"> </span> Upload cool screenshot </div>
                 <div id="uploadfile" class="collapse drops content">
-                    <div>
+                    <div style="padding: 20px 40px 20px 40px;">
                         @if($info["screenshot"])
                             @include('file.form')
                         @else
-                            <ul>Last upload : {{$info["screenshot_time"]->created_at->diffForHumans()}} </ul>
-                            <ul>Next possible in : {{$info["screenshot_time"]->created_at->addHours(config('custom.screenshot_limit'))->diffForHumans()}} </ul>
+                            <p>Last upload : {{$info["screenshot_time"]->created_at->diffForHumans()}} </p>
+                            <p>Next possible in
+                                : {{$info["screenshot_time"]->created_at->addHours(config('custom.screenshot_limit'))->diffForHumans()}} </p>
                         @endif
                     </div>
                 </div>

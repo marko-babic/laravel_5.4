@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+use Misc;
 use Illuminate\Database\Eloquent\Model;
 
 class Screenshot extends Model
@@ -11,18 +13,17 @@ class Screenshot extends Model
     ];
 
     /*
-     * Check whether user can upload screenshot (depends on the custom.conf )
+     * Check whether user can upload screenshot (depends on the custom.conf)
      *
      * @return boolean
      */
     public static function canupload()
     {
-        $last_upload = self::where('account_id', \Auth::User()->id)->orderBy('created_at','desc')->first();
+        $last_upload = self::where('account_id', Auth::User()->id)->orderBy('created_at', 'desc')->first();
 
         if($last_upload) {
-            if(config('custom.screenshot_limit') - ((new \Carbon\Carbon($last_upload->created_at, 'UTC'))->diffInHours()) > 0) {
+            if (!Misc::checkTime($last_upload->created_at, config('custom.screenshot_limit')))
                 return false;
-            }
         }
 
         return true;
@@ -30,7 +31,7 @@ class Screenshot extends Model
 
     public static function screens()
     {
-        return self::with(['user'])->get();
+        return self::with(['user'])->orderBy('votes', 'desc')->get();
     }
 
     public function user()

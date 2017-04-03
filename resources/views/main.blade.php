@@ -46,6 +46,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
 @yield('admin_scripts')
+@include('js.variables')
+<script src="{{ asset('js/functions.js') }}"></script>
 
 <script type="text/javascript">
     $(document).on('ready', function () {

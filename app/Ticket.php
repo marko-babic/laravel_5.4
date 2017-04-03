@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Misc;
 
 class Ticket extends Model
 {
@@ -18,13 +20,13 @@ class Ticket extends Model
 
     public static function cansubmit()
     {
-        $tickets = self::where(['account_id' => \Auth::User()->id])->get();
+        $tickets = self::where(['account_id' => Auth::User()->id])->get();
 
         foreach($tickets as $ticket)
         {
             if($ticket->status_id == 2 || $ticket->status_id == 3) {
                 return false;
-            } elseif($ticket->status_id == 1 && (config('custom.ticket_limit') - ((new \Carbon\Carbon($ticket->created_at, 'UTC'))->diffInHours()) > 0)) {
+            } elseif ($ticket->status_id == 1 && (!Misc::checkTime($ticket->created_at, config('custom.ticket_limit')))) {
                 return false;
             }
         }
@@ -34,7 +36,7 @@ class Ticket extends Model
 
     public static function info()
     {
-        $tickets = self::where(['status_id' => 1, 'account_id' => \Auth::user()->id])->with(['user','topic','replies','status'])->first();
+        $tickets = self::where(['status_id' => 1, 'account_id' => Auth::user()->id])->with(['user', 'topic', 'replies', 'status'])->first();
 
         if($tickets)
             TicketReply::cansubmitreply($tickets->id) ? $tickets["cansubmitreply"] = TicketReply::cansubmitreply($tickets->id) : false;
