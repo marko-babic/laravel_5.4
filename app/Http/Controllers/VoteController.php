@@ -48,7 +48,7 @@ class VoteController extends Controller
 
             Vote::create([
                 'screenshot_id' => request('id'),
-                'account_id' => Auth::user()->id
+                'account_id' => Auth::id()
             ]);
 
             Screenshot::whereId(request('id'))

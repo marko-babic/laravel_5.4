@@ -20,7 +20,7 @@ class Ticket extends Model
 
     public static function cansubmit()
     {
-        $tickets = self::where(['account_id' => Auth::User()->id])->get();
+        $tickets = self::where(['account_id' => Auth::id()])->get();
 
         foreach($tickets as $ticket)
         {
@@ -36,7 +36,7 @@ class Ticket extends Model
 
     public static function info()
     {
-        $tickets = self::where(['status_id' => 1, 'account_id' => Auth::user()->id])->with(['user', 'topic', 'replies', 'status'])->first();
+        $tickets = self::where(['status_id' => 1, 'account_id' => Auth::id()])->with(['user', 'topic', 'replies', 'status'])->first();
 
         if($tickets)
             TicketReply::cansubmitreply($tickets->id) ? $tickets["cansubmitreply"] = TicketReply::cansubmitreply($tickets->id) : false;
@@ -47,14 +47,12 @@ class Ticket extends Model
     /*
      * Gets all user's active tickets
      *
-     * @return array $tickets all ticket info
+     * @return array $tickets all tickets info
      */
 
     public static function admin_info($id)
     {
-        $tickets = self::where(['id' => $id])->with(['user','topic','replies','status'])->first();
-
-        return $tickets;
+        return self::whereId($id)->with(['user', 'topic', 'replies', 'status'])->first();
     }
 
     /*

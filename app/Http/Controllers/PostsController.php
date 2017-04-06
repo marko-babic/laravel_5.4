@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Auth;
+use App\Post;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -35,7 +35,7 @@ class PostsController extends Controller
         Post::create([
             'title' => request('title'),
             'content' => request('content'),
-            'author' => Auth::user()->id
+            'author' => Auth::id()
         ]);
 
         return redirect('/home');
@@ -59,11 +59,12 @@ class PostsController extends Controller
             ]
         );
 
-        $post = Post::find($id);
-        $post->title = request('title');
-        $post->content = request('content');
-        $post->author = Auth::user()->id;
-        $post->save();
+        $post = Post::whereId($id);
+        $post->update([
+            'title' => request('title'),
+            'content' => request('content'),
+            'author' => Auth::id(),
+        ]);
 
         return redirect('/home');
     }

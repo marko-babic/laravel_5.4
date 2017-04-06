@@ -16,15 +16,18 @@ class HomeController extends Controller
 
     public function index()
     {
+
         if(Auth::user()->isAdmin()){
-            return view('nav.admin');
+            return view('admin.admin-main')->with('unread_notifications', Auth::User()->unreadNotifications);
         } else {
             $info["ticket"] = Ticket::info();
             $info["screenshot"] = Screenshot::canupload();
             $info["cansubmit"] = Ticket::cansubmit();
+            $info["notifications"] = Auth::User()->notifications()->paginate(10);
+
 
             if(!$info["screenshot"])
-                $info["screenshot_time"] = Screenshot::where('account_id', Auth::User()->id)->orderBy('created_at','desc')->first();
+                $info["screenshot_time"] = Screenshot::where('account_id', Auth::id())->orderBy('created_at', 'desc')->first();
 
             return view('home')->with('info', $info);
         }

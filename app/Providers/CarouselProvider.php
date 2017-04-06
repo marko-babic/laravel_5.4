@@ -14,7 +14,7 @@ class CarouselProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('carousel', \App\Screenshot::screens());
+        View::share('carousel', \App\Screenshot::screens()->where('approved', 1));
     }
 
     /**
