@@ -17,7 +17,7 @@ Route::get('/faq', 'MainWebController@faq')->name('faq');
 Route::get('/donate', 'MainWebController@donate')->name('donate');
 Route::get('/rules', 'MainWebController@rules')->name('rules');
 
-
+Route::put('notification', 'NotificationController@update')->name('notification');
 Route::resource('/posts', 'PostsController', ['middleware' => ['auth', 'admin']]);
 Route::post('/ticket/reply/{id}','TicketController@reply')->name('ticket_reply');
 Route::resource('/ticket', 'TicketController',['except' => 'reply']);

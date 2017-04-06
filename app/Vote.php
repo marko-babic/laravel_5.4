@@ -16,7 +16,7 @@ class Vote extends Model
     public static function canvote($id)
     {
         if (Screenshot::find($id)->exists()) { // check for approved only
-            $vote = Vote::where('screenshot_id', $id)->where('account_id', Auth::User()->id)->exists();
+            $vote = Vote::where('screenshot_id', $id)->where('account_id', Auth::id())->exists();
             if (!$vote) {
                 $votes = Vote::TimeLimit()->get();
 
@@ -41,6 +41,6 @@ class Vote extends Model
 
     public function scopeTimeLimit($query)
     {
-        return $query->where('created_at', '>=', Carbon::now()->subHours(config('custom.vote_hour_limit')))->where('account_id', Auth::User()->id);
+        return $query->where('created_at', '>=', Carbon::now()->subHours(config('custom.vote_hour_limit')))->where('account_id', Auth::id());
     }
 }

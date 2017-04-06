@@ -7,7 +7,9 @@
             </div>
             <div class="col-md-5">
                 <div class="stats-bg">
-                    <div class="stats active"> <a data-toggle="pill" href="#home"> RATES </a></div><div class="stats"> <a data-toggle="pill" href="#menu1"> SERVER INFO </a></div><div class="stats"> <a data-toggle="pill" href="#menu2"> SERVER STATUS </a></div>
+                    <div class="stats active"><a class="stats-link" data-toggle="pill" href="#home"> RATES </a></div>
+                    <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu1"> SERVER INFO </a></div>
+                    <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu2"> SERVER STATUS </a></div>
                 </div>
 
                 <div class="tab-content element">

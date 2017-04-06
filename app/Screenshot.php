@@ -19,7 +19,7 @@ class Screenshot extends Model
      */
     public static function canupload()
     {
-        $last_upload = self::where('account_id', Auth::User()->id)->orderBy('created_at', 'desc')->first();
+        $last_upload = self::where('account_id', Auth::id())->orderBy('created_at', 'desc')->first();
 
         if($last_upload) {
             if (!Misc::checkTime($last_upload->created_at, config('custom.screenshot_limit')))

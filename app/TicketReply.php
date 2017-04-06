@@ -16,7 +16,7 @@ class TicketReply extends Model
         $last = self::where('ticket_id', $id)->orderBy('created_at','desc')->first();
 
         if($last) {
-            if ($last->account_id == Auth::user()->id) {
+            if ($last->account_id == Auth::id()) {
                 return false;
             } else {
                 return true;

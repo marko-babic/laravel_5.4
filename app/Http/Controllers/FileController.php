@@ -14,7 +14,7 @@ class FileController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['update']]);
+        $this->middleware('admin', ['only' => ['update', 'destroy', 'index']]);
     }
 
     public function index()
@@ -35,12 +35,13 @@ class FileController extends Controller
                 Screenshot::create([
                    'description' => request('description'),
                     'path' => $file_name,
-                    'account_id' => Auth::user()->id,
+                    'account_id' => Auth::id(),
                     'votes' => 0
                 ]);
 
                 Misc::createThumbnail($original_path, $thumbnail_path, config('custom.thumbnail_x'), config('custom.thumbnail_y'));
 
+                Auth::User()->notifyAdmin('upload');
                 session()->flash('screenshot', 'Screenshot was successfully uploaded. Waiting for approval.');
             }
         }
@@ -50,13 +51,19 @@ class FileController extends Controller
 
     public function update(Request $request, $id)
     {
-        Screenshot::whereId($id)->update(['approved' => 1]);
+        $scrreenshot = Screenshot::whereId($id);
+        $scrreenshot->update(['approved' => 1]);
 
-        return response()->json(['response' => 'success']);
+        Auth::User()->notifyUser("screenshot", 1, $scrreenshot->first());
     }
 
     public function destroy($id)
     {
-        //
+        $scrreenshot = Screenshot::whereId($id);
+        $scrreenshot->update(['approved' => 2]);
+
+        Auth::User()->notifyUser("screenshot", 2, $scrreenshot->first());
+
+        return response()->json(['response' => 'success']);
     }
 }

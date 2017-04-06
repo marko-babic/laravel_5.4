@@ -265,7 +265,7 @@ ul a:hover {
     }
 }
 
-#approve, #vote {
+#deny, #approve, #vote, .note-read {
     cursor: pointer;
     margin-left: 20px;
 }
@@ -274,7 +274,7 @@ ul a:hover {
     color: red;
 }
 
-#approve:hover {
+#approve:hover, .note-read:hover {
     color: green;
 }
 
@@ -297,6 +297,29 @@ ul a:hover {
     padding: 15px;
 }
 
-.signature a:hover {
+#deny:hover, .signature a:hover {
     color: red;
+}
+
+.loader {
+    animation: spin 1s linear infinite;
+    -webkit-animation: spin 1s linear infinite;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #555;
+    height: 50px;
+    width: 50px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#upload_hidden {
+    display: none;
 }

@@ -42,16 +42,20 @@ function getPosts() {
     }
 }
 
-function Approve(id) {
-    if (confirm('Really approve?')) {
+function screenshotAction(id, action, text) {
+    if (confirm('Really ' + text + ' ?')) {
         $.ajax({
-            type: "PUT",
+            type: action,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: ajax_admin_url.approve_screenshot + '/' + id,
+            url: ajax_admin_url.action_screenshot + '/' + id,
             success: function(result) {
-                location.reload();
+                $('#scr-modal').fadeOut(1000, 'swing');
+                $('img[data-id=' + id + ']').fadeOut();
+            },
+            error: function () {
+                alert("Nop, something wrong.")
             }
         });
     }
@@ -72,10 +76,37 @@ function removePost(id){
     }
 }
 
+function markAsRead(id) {
+    $.ajax({
+        type: "PUT",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {id: id},
+        url: ajax_admin_url.mark_as_read,
+        success: function (result) {
+            $('[data-notification=' + id + ']').fadeOut();
+        }
+    });
+}
+
 $(document).on('ready', function () {
     $("#jqte").jqte();
 
-    $(document).on("click", '#approve', function () {
-        Approve($(this).data('imgid'));
+
+    $(document).on("click", '.ad-screen', function () {
+        var caption = $('#caption');
+        var action = this.id;
+        var id = caption.data('imgid');
+
+        if (action === 'approve') {
+            screenshotAction(id, 'PUT', action);
+        } else if (action === 'deny') {
+            screenshotAction(id, 'DELETE', action);
+        }
+    });
+
+    $('.note-read').click(function () {
+        markAsRead($(this).parent().data('notification'));
     });
 });
