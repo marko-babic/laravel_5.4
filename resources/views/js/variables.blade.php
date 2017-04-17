@@ -1,6 +1,6 @@
 <script>
     var ajax_url = {
-        vote: "{{route('vote.store')}}",
+        vote: "{{route('vote')}}",
         login: "{{route('login')}}"
     };
 

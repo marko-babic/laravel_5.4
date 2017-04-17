@@ -16,17 +16,19 @@ Route::get('/start', 'MainWebController@start')->name('start');
 Route::get('/faq', 'MainWebController@faq')->name('faq');
 Route::get('/donate', 'MainWebController@donate')->name('donate');
 Route::get('/rules', 'MainWebController@rules')->name('rules');
+Route::get('home', 'HomeController@index')->name('home');
+
 
 Route::put('notification', 'NotificationController@update')->name('notification');
 Route::resource('/posts', 'PostsController', ['middleware' => ['auth', 'admin']]);
 Route::post('/ticket/reply/{id}','TicketController@reply')->name('ticket_reply');
 Route::resource('/ticket', 'TicketController',['except' => 'reply']);
 Route::resource('/screenshot','FileController');
-Route::resource('vote', 'VoteController');
+//Route::resource('vote', 'VoteController');
+Route::post('vote', 'VoteController@store')->name('vote');
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
 
 
 
