@@ -14,7 +14,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'login', 'email', 'password','displayname','lastactive','access_level','lastServer','admin'
+        'login', 'email', 'password', 'displayname', 'lastactive', 'access_level', 'lastServer',
     ];
 
     protected $table = 'accounts';
@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public static function notifyAdmin($notification)
     {
-        $admin = self::where('admin', 1)->first();
+        $admin = self::where('access_level', '>', 0)->first();
 
         switch ($notification) {
             case 'upload':
@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->admin;
+        return $this->access_level;
     }
 
     public function tickets()

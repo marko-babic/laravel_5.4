@@ -24,7 +24,6 @@ Route::resource('/posts', 'PostsController', ['middleware' => ['auth', 'admin']]
 Route::post('/ticket/reply/{id}','TicketController@reply')->name('ticket_reply');
 Route::resource('/ticket', 'TicketController',['except' => 'reply']);
 Route::resource('/screenshot','FileController');
-//Route::resource('vote', 'VoteController');
 Route::post('vote', 'VoteController@store')->name('vote');
 
 Auth::routes();

@@ -23,13 +23,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'lastactive' => time(),
         'access_level' => 0,
         'lastServer' => 1,
-        'admin' => 0,
         'displayname' => $faker->name,
     ];
 });
 
 $factory->state(\App\User::class, 'admin', function (\Faker\Generator $faker) {
     return [
-        'admin' => 1,
+        'access_level' => 1,
     ];
 });
