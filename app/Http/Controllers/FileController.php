@@ -29,8 +29,8 @@ class FileController extends Controller
                 $file = request()->file('screenshot');
                 $file_name = str_random(40) . '.' . $file->extension();
                 $file->storeAs('public/screenshots/', $file_name);
-                $thumbnail_path = storage_path() . '\app\public\screenshots_thumbnail\\' . $file_name;
-                $original_path = storage_path() . '\app\public\screenshots\\' . $file_name;
+                $thumbnail_path = storage_path() . '/app/public/screenshots_thumbnail/' . $file_name;
+                $original_path = storage_path() . '/app/public/screenshots/' . $file_name;
 
                 Screenshot::create([
                    'description' => request('description'),
@@ -43,6 +43,10 @@ class FileController extends Controller
 
                 Auth::User()->notifyAdmin('upload');
                 session()->flash('screenshot', 'Screenshot was successfully uploaded. Waiting for approval.');
+
+                /* in case apache doesn't set them properly */
+                chmod($original_path, 0644);
+                chmod($thumbnail_path, 0644);
             }
         }
 

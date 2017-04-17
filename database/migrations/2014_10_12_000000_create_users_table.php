@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->integer('lastactive');
             $table->smallInteger('access_level');
             $table->smallInteger('lastServer');
-            $table->tinyInteger('admin');
             $table->string('displayname');
             $table->rememberToken();
             $table->timestamps();
