@@ -8,11 +8,10 @@
             <div class="col-md-5">
                 <div class="stats-bg">
                     <div class="stats active"><a class="stats-link" data-toggle="pill" href="#home"> RATES </a></div>
-                    <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu1"> SERVER INFO </a></div>
-                    <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu2"> SERVER STATUS </a></div>
+                    <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu1"> SERVER INFO </a></div>                    <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu2"> SERVER STATUS </a></div>
                 </div>
 
-                
+
                 <div class="tab-content element">
                     <div id="home" class="tab-pane fade in active " style="padding-left: 30px;">
                         <p>XP: 15x <br>
