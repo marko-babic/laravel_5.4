@@ -11,6 +11,7 @@
                     <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu1"> SERVER INFO </a></div>
                     <div class="stats"><a class="stats-link" data-toggle="pill" href="#menu2"> SERVER STATUS </a></div>
                 </div>
+
                 <div class="tab-content element">
                     <div id="home" class="tab-pane fade in active " style="padding-left: 30px;">
                         <p>XP: 15x <br>
@@ -36,8 +37,7 @@
                     </div>
                     <div id="menu2" class="tab-pane fade">
                         <p>
-                            Login server : ONLINE <br>
-                            Game server : ONLINE <br>
+                            Login server : ONLINE <br> Game server : ONLINE <br>
                         </p>
                     </div>
                 </div>
