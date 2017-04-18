@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Post;
-use Illuminate\Http\Request;
+use Auth;
 
 class PostsController extends Controller
 {
@@ -24,7 +23,7 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
         $this->validate(request(), [
             'title' => 'required',
@@ -51,7 +50,7 @@ class PostsController extends Controller
         return view('posts.edit')->with('post', Post::find($id));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
         $this->validate(request(), [
                 'title' => 'required',

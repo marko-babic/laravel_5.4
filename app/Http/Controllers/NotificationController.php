@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-Use Auth;
-use Illuminate\Http\Request;
+use Auth;
 
 class NotificationController extends Controller
 {
@@ -12,7 +11,7 @@ class NotificationController extends Controller
         $this->middleware(['auth', 'admin']);
     }
 
-    public function update(Request $request)
+    public function update()
     {
         $notification = Auth::user()->notifications()->find(request('id'));
         $notification->markAsRead();

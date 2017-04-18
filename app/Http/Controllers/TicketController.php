@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Http\Requests\TicketStore;
 use App\Ticket;
 use App\TicketReply;
+use Auth;
 
 
 class TicketController extends Controller
@@ -37,12 +37,18 @@ class TicketController extends Controller
 
     public function edit($id)
     {
-        return view('tickets.edit')->with('info', Ticket::admin_info($id));
+        if ($this->ticketExists($id))
+            return view('tickets.edit')->with('info', Ticket::admin_info($id));
+
+        return redirect('/home');
     }
 
-    public function destroy($id)
+    public function ticketExists($id)
     {
-        Ticket::whereId($id)->forceDelete();
+        if (Ticket::whereId($id)->exists())
+            return true;
+
+        return false;
     }
 
     /*
@@ -53,12 +59,28 @@ class TicketController extends Controller
      * @return redirect
      */
 
+    public function destroy($id)
+    {
+        if ($this->ticketExists($id))
+            Ticket::whereId($id)->forceDelete();
+    }
+
+
+    /*
+     * verify if submitting user owns the ticket, or if admin is replying. Either way, they're both allowed to process.
+     */
+
     public function reply($id)
     {
+
+        if (!$this->checkOwner($id)) {
+            return redirect('/home');
+        }
+
         TicketReply::create([
             'ticket_id' => $id,
             'content' => request('content'),
-            'account_id' => Auth::user()->id
+            'account_id' => Auth::id()
         ]);
 
         if(Auth::user()->isAdmin()) {
@@ -68,5 +90,16 @@ class TicketController extends Controller
 
         session()->flash('ticket_message', 'Ticket was successfully replied.');
         return redirect('/home#submitticket');
+    }
+
+    public function checkOwner($id)
+    {
+
+        if ($ticket = Ticket::whereId($id)->firstOrFail()) {
+            if ($ticket->account_id == Auth::id() || Auth::user()->isAdmin())
+                return true;
+        }
+
+        return false;
     }
 }

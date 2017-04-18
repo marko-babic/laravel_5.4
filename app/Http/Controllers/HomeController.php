@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Screenshot;
+use App\Ticket;
 use Auth;
-use \App\Screenshot;
-use \App\Ticket;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -16,7 +15,6 @@ class HomeController extends Controller
 
     public function index()
     {
-
         if(Auth::user()->isAdmin()){
             return view('admin.admin-main')->with('unread_notifications', Auth::User()->unreadNotifications);
         } else {

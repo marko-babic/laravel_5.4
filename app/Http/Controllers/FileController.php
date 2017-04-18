@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Http\Requests\FileUpload;
 use App\Screenshot;
-use Illuminate\Http\Request;
+use Auth;
 use Misc;
 
 class FileController extends Controller
 {
+
+    protected $state = [
+        'default' => 0,
+        'approved' => 1,
+        'denied' => 2,
+    ];
 
     public function __construct()
     {
@@ -19,7 +24,7 @@ class FileController extends Controller
 
     public function index()
     {
-        return view('file.screens')->with('screenshots',Screenshot::screens()->where('approved', 0));
+        return view('file.screens')->with('screenshots', Screenshot::screens()->where('approved', $this->state['default']));
     }
 
     public function store(FileUpload $request)
@@ -36,7 +41,8 @@ class FileController extends Controller
                    'description' => request('description'),
                     'path' => $file_name,
                     'account_id' => Auth::id(),
-                    'votes' => 0
+                    'votes' => 0,
+                    'approved' => $this->state['default'],
                 ]);
 
                 Misc::createThumbnail($original_path, $thumbnail_path, config('custom.thumbnail_x'), config('custom.thumbnail_y'));
@@ -53,20 +59,47 @@ class FileController extends Controller
         return back();
     }
 
-    public function update(Request $request, $id)
-    {
-        $scrreenshot = Screenshot::whereId($id);
-        $scrreenshot->update(['approved' => 1]);
+    /*
+     * Approve screenshot to be displayed in carousel.
+     */
 
-        Auth::User()->notifyUser("screenshot", 1, $scrreenshot->first());
+    public function update($id)
+    {
+        if (!$this->sExists($id))
+            return false;
+
+        $screenshot = Screenshot::whereId($id);
+        $screenshot->update(['approved' => $this->state['approved']]);
+
+        Auth::User()->notifyUser("screenshot", $this->state['approved'], $screenshot->first());
     }
+
+
+    /*
+     * Set screenshot as denied, not actually delete it. File and thumbnail remain on the server.
+     */
+
+    public function sExists($id)
+    {
+        if (Screenshot::whereId($id)->exists())
+            return true;
+
+        return false;
+    }
+
+    /*
+     * Check whether screenshot with given id actually exists before we try to use it.
+     */
 
     public function destroy($id)
     {
-        $scrreenshot = Screenshot::whereId($id);
-        $scrreenshot->update(['approved' => 2]);
+        if (!$this->sExists($id))
+            return response()->json(['response' => 'error']);
 
-        Auth::User()->notifyUser("screenshot", 2, $scrreenshot->first());
+        $screenshot = Screenshot::whereId($id);
+        $screenshot->update(['approved' => $this->state['denied']]);
+
+        Auth::User()->notifyUser("screenshot", $this->state['denied'], $screenshot->first());
 
         return response()->json(['response' => 'success']);
     }
