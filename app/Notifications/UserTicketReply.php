@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-class ScreenshotSubmitted extends Notification
+class UserTicketReply extends Notification
 {
     use Queueable;
 
@@ -22,8 +22,7 @@ class ScreenshotSubmitted extends Notification
     public function toArray($notifiable)
     {
         return [
-            'login' => \Auth::User()->login,
-            'url' => route('screenshot.index'),
+
         ];
     }
 }

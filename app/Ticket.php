@@ -34,6 +34,12 @@ class Ticket extends Model
         return true;
     }
 
+    /*
+     * Gets all user's active tickets
+     *
+     * @return array $tickets all tickets info
+     */
+
     public static function info()
     {
         $tickets = self::where(['status_id' => 1, 'account_id' => Auth::id()])->with(['user', 'topic', 'replies', 'status'])->first();
@@ -45,9 +51,9 @@ class Ticket extends Model
     }
 
     /*
-     * Gets all user's active tickets
+     * Gets all user info for admin page
      *
-     * @return array $tickets all tickets info
+     * @return array $tickets all ticket info
      */
 
     public static function admin_info($id)
@@ -56,9 +62,9 @@ class Ticket extends Model
     }
 
     /*
-     * Gets all user info for admin page
+     * return all tickets in the database, for admin only
      *
-     * @return array $tickets all ticket info
+     * @return array Ticket
      */
 
     public static function alltickets()
@@ -66,10 +72,13 @@ class Ticket extends Model
         return self::with(['user','topic','replies','status'])->get();
     }
 
+    public static function ticket_info()
+    {
+        return self::where('account_id',Auth::id())->with(['user', 'topic', 'replies', 'status'])->get();
+    }
+
     /*
-     * return all tickets in the database, for admin only
-     *
-     * @return array Ticket
+     * relationships
      */
 
     public function replies()

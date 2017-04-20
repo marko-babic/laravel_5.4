@@ -1,16 +1,29 @@
-<div>
-    <p>Ticket topic: {{  $info["ticket"]->topic->text}}</p>
+@extends('nav.index')
+
+@section('content')
+    <div class="element ticket-header">
+        <ul>
+            <li><b>SUBJECT:</b> {{$info["ticket"]->topic->text}} </li>
+            <li><b>SUBMITTED:</b>  {{$info["ticket"]->created_at->diffForHumans()}} </li>
+            <li><b>TICKET STATUS:</b> <span style="color: green">{{$info["ticket"]->status->text}}</span> </li>
+            <li><b>TICKET ID:</b> {{strtoupper(str_random(10))}} </li>
+        </ul>
+    </div>
     <hr>
     <div class="element">
-        <div>    {{ $info["ticket"]->content }} </div>
+        <b> QUESTION </b>
+        <p class="ticket-question">
+            {{$info["ticket"]->content}}
+        </p>
     </div>
         @foreach($info["ticket"]->replies as $reply)
             <div class="element">
-                <div> Date : {{$reply->created_at}} </div>
-                <div>    {{$reply->content}} </div>
+                <u> Date : {{$reply->created_at}} </u> <br><br>
+                <p>    {{$reply->content}} </p>
             </div>
         @endforeach
     <hr>
-    <p>Submitted:  {{$info["ticket"]->created_at->diffForHumans()}} </p>
-    <p>Ticket status: {{$info["ticket"]->status->text}} </p>
-</div>
+    @if($info["cansubmit"])
+        @include('tickets.reply-form')
+    @endif
+@endsection

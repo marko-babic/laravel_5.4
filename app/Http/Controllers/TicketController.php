@@ -13,7 +13,7 @@ class TicketController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin', ['only' => ['index','edit','destroy']]);
+        $this->middleware('admin', ['only' => ['index','destroy']]);
     }
 
     public function index()
@@ -37,18 +37,23 @@ class TicketController extends Controller
 
     public function edit($id)
     {
-        if ($this->ticketExists($id))
-            return view('tickets.edit')->with('info', Ticket::admin_info($id));
+        if($test = $this->checkOwner($id)) {
+            if(Auth::user()->isAdmin()) {
+                return view('tickets.edit')->with('info', Ticket::admin_info($id));
+            } else {
+                $info["ticket"] = Ticket::admin_info($id);
+                $info["cansubmit"] = TicketReply::cansubmitreply($id);
+                return view('tickets.replies')->with('info', $info);
+            }
+        }
 
         return redirect('/home');
     }
 
-    public function ticketExists($id)
+    public function destroy($id)
     {
-        if (Ticket::whereId($id)->exists())
-            return true;
-
-        return false;
+        if ($this->ticketExists($id))
+            Ticket::whereId($id)->forceDelete();
     }
 
     /*
@@ -59,21 +64,9 @@ class TicketController extends Controller
      * @return redirect
      */
 
-    public function destroy($id)
-    {
-        if ($this->ticketExists($id))
-            Ticket::whereId($id)->forceDelete();
-    }
-
-
-    /*
-     * verify if submitting user owns the ticket, or if admin is replying. Either way, they're both allowed to process.
-     */
-
     public function reply($id)
     {
-
-        if (!$this->checkOwner($id)) {
+        if (!$user_id = $this->checkOwner($id)) {
             return redirect('/home');
         }
 
@@ -85,20 +78,33 @@ class TicketController extends Controller
 
         if(Auth::user()->isAdmin()) {
             Ticket::whereId($id)->update(['status_id' => request('status')]);
+            Auth::user()->notifyUserTicket($user_id);
             return redirect('/ticket');
         }
 
+        Auth::user()->notifyAdmin('ticket_reply');
         session()->flash('ticket_message', 'Ticket was successfully replied.');
         return redirect('/home#submitticket');
     }
 
+    /*
+     * verify if submitting user owns the ticket, or if admin is replying. Either way, they're both allowed to process.
+     */
+
     public function checkOwner($id)
     {
-
-        if ($ticket = Ticket::whereId($id)->firstOrFail()) {
+        if ($ticket = Ticket::whereId($id)->first()) {
             if ($ticket->account_id == Auth::id() || Auth::user()->isAdmin())
-                return true;
+                return $ticket->account_id;
         }
+
+        return false;
+    }
+
+    public function ticketExists($id)
+    {
+        if (Ticket::whereId($id)->exists())
+            return true;
 
         return false;
     }

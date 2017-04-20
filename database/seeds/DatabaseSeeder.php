@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,7 +28,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'text' => 'Cheater repor'
+                'text' => 'Cheater report'
             ],
             [
                 'id' => 4,

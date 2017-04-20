@@ -2,12 +2,13 @@
 
 namespace App;
 
-use App\Screenshot;
 use App\Notifications\ScreenshotReply;
 use App\Notifications\ScreenshotSubmitted;
+use App\Notifications\TicketReply;
 use App\Notifications\TicketSubmitted;
-use Illuminate\Notifications\Notifiable;
+use App\Notifications\UserTicketReply;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -32,6 +33,9 @@ class User extends Authenticatable
     {
         $admin = self::where('access_level', '>', 0)->first();
 
+        if (!$admin)
+            return false;
+
         switch ($notification) {
             case 'upload':
                 $admin->notify(new ScreenshotSubmitted());
@@ -39,10 +43,12 @@ class User extends Authenticatable
             case 'ticket';
                 $admin->notify(new TicketSubmitted());
                 break;
+            case 'ticket_reply':
+                $admin->notify(new TicketReply());
         }
     }
 
-    public static function notifyUser($notification, $state, Screenshot $screenshot)
+    public static function notifyUser($notification, $state , Screenshot $screenshot)
     {
         $user = self::whereId($screenshot->account_id)->first();
 
@@ -50,9 +56,14 @@ class User extends Authenticatable
             case 'screenshot' :
                 $user->notify(new ScreenshotReply($state, $screenshot));
                 break;
-            case 'ticket':
-                break;
         }
+    }
+
+    public static function notifyUserTicket($user_id)
+    {
+        $user = self::whereId($user_id)->first();
+
+        $user->notify(new UserTicketReply());
     }
 
     public function isAdmin()

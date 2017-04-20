@@ -1,6 +1,7 @@
 @extends('nav.index')
 
 @section('content')
+    <div style="padding-bottom: 150px;">
     @if(session('ticket_message'))
         <div id="ticketmessage" class="alert alert-success">
             {{session('ticket_message')}}
@@ -21,7 +22,7 @@
             @endforeach
         </div>
     @endif
-
+    </div>
 @endsection
 
 @section('content_main')
@@ -57,25 +58,11 @@
         <div class="row" style="margin-left: 5px;">
             <div class="news">
                 <div class="title cp" data-toggle="collapse" data-target="#submitticket"> <span class="glyphicon glyphicon-chevron-down"> </span> Submit / review ticket </div>
-                @if(session('ticket_message'))
-                    <div id="submitticket" class="collapse drops content in" style="padding-left: 40px;">
-                @else
                     <div id="submitticket" class="collapse drops content" style="padding: 40px;">
-                @endif
-                    @if(count($info["ticket"]))
-                        @include('tickets.replies')
-                        @if($info["ticket"]["cansubmitreply"])
-                            @include('tickets.reply-form')
-                        @endif
-                    @else
-                        @if($info["cansubmit"])
-                            @include('tickets.form')
-                        @else
-                            Only one ticket per (x) days.
-                        @endif
-                    @endif
+                        @include('tickets.all-tickets')
+                        @include('tickets.form')
                     </div>
-                </div>
+            </div>
         </div>
         <div class="row" style="margin-left: 5px;">
             <div class="news">
@@ -88,23 +75,11 @@
                     <div class="content">
                         <ul>
                             @foreach($info["notifications"] as $notification)
-                                <li>
-                                    @if ($notification->data["ss_status"] == 1)
-                                        Screenshot "{{$notification->data["ss_description"]}}" was approved. Thank you
-                                        for your contribution ! <br>
-                                        {{$notification->created_at->diffForHumans()}}
-                                        <span class="glyphicon glyphicon-ok" style="color: green;"></span>
-                                    @elseif ($notification->data["ss_status"] == 2)
-                                        We're sorry, screenshot "{{$notification->data["ss_description"]}}" was denied.
-                                        Make sure you follow the <a href="{{route('rules')}}"
-                                                                    target="_blank">rules. </a><br>
-                                        {{$notification->created_at->diffForHumans()}}
-                                        <span class="glyphicon glyphicon-remove" style="color: red;"></span>
-                                    @endif
-                                </li>
                                 @php
-                                    Auth::User()->notifications()->find($notification->id)->markAsRead();
+                                $view = 'notifications.'.last(explode('\\',$notification["type"]));
+                                Auth::User()->notifications()->find($notification->id)->markAsRead();
                                 @endphp
+                                @include($view)
                             @endforeach
                         </ul>
                     </div>

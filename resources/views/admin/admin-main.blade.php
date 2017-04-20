@@ -7,9 +7,10 @@
             <ul>
                 @foreach($unread_notifications as $notification)
                     <li data-notification="{{$notification->id}}">
-                        {{$notification->data["text"]}} by {{$notification->data["login"]}} ,
-                        {{$notification->created_at->diffForHumans()}}
-                        <a href="{{$notification->data["url"]}}" target="_blank">[check]</a>
+                        @php
+                            $view = 'notifications.'.last(explode('\\',$notification["type"]));
+                        @endphp
+                        @include($view)
                         <span class="glyphicon glyphicon-ok note-read" title="Mark as read"></span>
                     </li>
                 @endforeach

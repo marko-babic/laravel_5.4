@@ -18,7 +18,7 @@ class HomeController extends Controller
         if(Auth::user()->isAdmin()){
             return view('admin.admin-main')->with('unread_notifications', Auth::User()->unreadNotifications);
         } else {
-            $info["ticket"] = Ticket::info();
+            $info["ticket"] = Ticket::ticket_info();
             $info["screenshot"] = Screenshot::canupload();
             $info["cansubmit"] = Ticket::cansubmit();
             $info["notifications"] = Auth::User()->notifications()->paginate(10);

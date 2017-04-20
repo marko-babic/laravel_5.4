@@ -20,7 +20,7 @@
             </a>
         </div>
         @if(Auth::check())
-            <div class="link">
+            <div class="link pull-right">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> LOGOUT  </a>
             </div>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
