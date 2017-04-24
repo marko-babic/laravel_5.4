@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace L2;
 
-use App\Notifications\ScreenshotReply;
-use App\Notifications\ScreenshotSubmitted;
-use App\Notifications\TicketReply;
-use App\Notifications\TicketSubmitted;
-use App\Notifications\UserTicketReply;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use L2\Notifications\ScreenshotReply;
+use L2\Notifications\ScreenshotSubmitted;
+use L2\Notifications\TicketReply;
+use L2\Notifications\TicketSubmitted;
+use L2\Notifications\UserTicketReply;
 
 class User extends Authenticatable
 {
@@ -91,12 +91,12 @@ class User extends Authenticatable
 
     public function getLastTicketReply()
     {
-        return \App\TicketReply::where('account_id',$this->id)->orderBy('created_at','desc')->first();
+        return \L2\TicketReply::where('account_id',$this->id)->orderBy('created_at','desc')->first();
     }
 
     public function tickets()
     {
-        return $this->hasMany('\App\Ticket');
+        return $this->hasMany('\L2\Ticket');
     }
 
 }

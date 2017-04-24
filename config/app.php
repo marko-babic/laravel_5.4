@@ -172,12 +172,12 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\CarouselProvider::class,
+        L2\Providers\AppServiceProvider::class,
+        L2\Providers\AuthServiceProvider::class,
+        // L2\Providers\BroadcastServiceProvider::class,
+        L2\Providers\EventServiceProvider::class,
+        L2\Providers\RouteServiceProvider::class,
+        L2\Providers\CarouselProvider::class,
 
     ],
 
@@ -229,7 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         /* our own aliases */
-        'Misc' => App\Helpers\MiscFunctions::class,
+        'Misc' => L2\Helpers\MiscFunctions::class,
 
 
     ],

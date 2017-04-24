@@ -55,6 +55,29 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
+        DB::table('post_description')->insert([
+            [
+                'id' => 1,
+                'description' => 'Main page'
+            ],
+            [
+                'id' => 2,
+                'description' => 'Start'
+            ],
+            [
+                'id' => 3,
+                'description' => 'Rules'
+            ],
+            [
+                'id' => 4,
+                'description' => 'Faq'
+            ],
+            [
+                'id' => 5,
+                'description' => 'Donate'
+            ]
+        ]);
+
         $this->command->info('Successfully added !');
     }
 }

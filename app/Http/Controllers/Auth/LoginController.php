@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace L2\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use L2\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends Controller

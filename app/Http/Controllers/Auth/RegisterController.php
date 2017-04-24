@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace L2\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
+use L2\Http\Controllers\Controller;
+use L2\User;
 
 class RegisterController extends Controller
 {

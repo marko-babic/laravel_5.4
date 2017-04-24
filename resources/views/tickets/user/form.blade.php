@@ -2,17 +2,18 @@
     <form action="{{route('ticket.store')}}" method="post">
         {{ csrf_field() }}
          <div class="form-group">
-            <label for="title">Reason</label>
-            <select class="form-control" name="option">
-                <option value="1">General question</option>
-                <option value="2">Bug report</option>
-                <option value="3">Cheater report</option>
-                <option value="4">Technical question</option>
-            </select>
+            <label for="option">Reason</label>
+             <div class="form-group">
+                 <select class="form-control" name="option" id="option">
+                     @foreach($info["ticket_topic"] as $st)
+                             <option value="{{$st->id}}"> {{$st->text}} </option>
+                     @endforeach
+                 </select>
+             </div>
         </div>
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea rows="10" class="form-control" name="content" placeholder="Explain your problem/concern here" required></textarea>
+            <textarea rows="10" class="form-control" name="content" id="content" placeholder="Explain your problem/concern here" required></textarea>
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-default">Submit</button>

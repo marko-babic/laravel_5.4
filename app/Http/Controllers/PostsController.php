@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace L2\Http\Controllers;
 
-use App\Post;
 use Auth;
+use L2\Post;
+use L2\PostDescription;
 
 class PostsController extends Controller
 {
 
+    private $sites = [
+    ];
+
     function __construct()
     {
         $this->middleware(['auth','admin'],['except' => ['index']]);
+        $this->sites = PostDescription::all();
     }
 
     public function index()
@@ -20,21 +25,23 @@ class PostsController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create')->with(['sites' => $this->sites]);
     }
 
     public function store()
     {
         $this->validate(request(), [
             'title' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'description' => 'required',
             ]
         );
 
         Post::create([
             'title' => request('title'),
             'content' => request('content'),
-            'author' => Auth::id()
+            'author' => Auth::id(),
+            'description_id' => request('description'),
         ]);
 
         return redirect('home');
@@ -47,7 +54,7 @@ class PostsController extends Controller
 
     public function edit($id)
     {
-        return view('posts.edit')->with('post', Post::find($id));
+        return view('posts.edit')->with(['post' => Post::find($id), 'sites' => $this->sites]);
     }
 
     public function update($id)
@@ -63,6 +70,7 @@ class PostsController extends Controller
             'title' => request('title'),
             'content' => request('content'),
             'author' => Auth::id(),
+            'description_id' => request('description'),
         ]);
 
         return redirect('home');

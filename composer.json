@@ -20,7 +20,7 @@
             "app/libraries"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "L2\\": "app/"
         },
         "files": [
             "app/Helpers/helpers.php"

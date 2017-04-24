@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace L2;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -37,11 +37,11 @@ class TicketReply extends Model
 
     public function user()
     {
-        return $this->belongsTo('\App\User','account_id');
+        return $this->belongsTo('\L2\User','account_id');
     }
 
     public function ticket()
     {
-        return $this->belongsTo('App\Ticket','ticket_id');
+        return $this->belongsTo('L2\Ticket','ticket_id');
     }
 }

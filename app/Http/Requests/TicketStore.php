@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace L2\Http\Requests;
 
-use App\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
+use L2\Ticket;
 
 class TicketStore extends FormRequest
 {

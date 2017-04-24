@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace L2\Http\Requests;
 
-use \App\Vote;
 use Illuminate\Foundation\Http\FormRequest;
+use L2\Vote;
 
 class VoteVerify extends FormRequest
 {

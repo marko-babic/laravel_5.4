@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace L2\Http\Controllers;
 
 use Auth;
 

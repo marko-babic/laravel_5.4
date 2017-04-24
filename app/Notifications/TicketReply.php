@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace L2\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -11,7 +11,7 @@ class TicketReply extends Notification
 
     protected $ticket;
 
-    public function __construct(\App\TicketReply $ticket)
+    public function __construct(\L2\TicketReply $ticket)
     {
         $this->ticket = $ticket;
     }

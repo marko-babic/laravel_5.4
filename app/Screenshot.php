@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace L2;
 
 use Auth;
-use Misc;
 use Illuminate\Database\Eloquent\Model;
+use Misc;
 
 class Screenshot extends Model
 {
@@ -36,6 +36,6 @@ class Screenshot extends Model
 
     public function user()
     {
-        return $this->belongsTo('\App\User', 'account_id');
+        return $this->belongsTo('\L2\User', 'account_id');
     }
 }

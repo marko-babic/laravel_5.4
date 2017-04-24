@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace L2\Helpers;
 
 use Carbon\Carbon;
 

@@ -71,7 +71,7 @@
         </div>
             <div class="row" style="margin-left: 5px;">
                 <div class="news">
-                    <div class="title"> history</div>
+                    <div class="title"> history </div>
                     <div class="content">
                         @include('notifications.user-history')
                     </div>
@@ -80,5 +80,4 @@
                     {{$info["notifications"]->links()}}
                 </div>
             </div>
-
 @endsection

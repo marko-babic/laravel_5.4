@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace L2\Http\Controllers;
 
-use App\Http\Requests\FileUpload;
-use App\Screenshot;
 use Auth;
+use L2\Http\Requests\FileUpload;
+use L2\Screenshot;
 use Misc;
 
 class FileController extends Controller

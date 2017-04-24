@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(L2\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -27,7 +27,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->state(\App\User::class, 'admin', function (\Faker\Generator $faker) {
+$factory->state(\L2\User::class, 'admin', function (\Faker\Generator $faker) {
     return [
         'access_level' => 1,
     ];

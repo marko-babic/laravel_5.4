@@ -5,31 +5,35 @@
 
     <div class="tab-content element">
         <div id="home" class="tab-pane fade in active " style="padding-left: 30px;">
-            <p>XP: 15x <br>
-                QUEST XP: 15x <br>
-                SP: 15x <br>
-                ADENA: 15x <br>
-                QUEST ADENA: 15x <br>
-                SEALSTONES: 15x <br>
-                ADENA DROP RATE: 70% <br>
-                DROP: 15x <br>
-                SPOIL: <br>
-                Materials: 10x amount, 1x chance <br>
-                Others: 10x chance, 1x amount
-            </p>
+            <ul class="list-unstyled">
+                <li> XP: 15x </li>
+                <li> QUEST XP: 15x </li>
+                <li> SP: 15x </li>
+                <li> ADENA: 15x </li>
+                <li> QUEST ADENA: 15x </li>
+                <li> SEALSTONES: 15x </li>
+                <li> ADENA DROP RATE: 70% </li>
+                <li> DROP: 15x </li>
+                <li> SPOIL: </li>
+                <li> Materials: 10x amount, 1x chance </li>
+                <li> Others: 10x chance, 1x amount </li>
+            </ul>
         </div>
         <div id="menu1" class="tab-pane fade text-center">
-            <p>   <b>CPU</b>: Intel Xeon E5-1620v2 <br>
-                <b>Cores:</b> 4 <br>
-                <b>RAM:</b> 16 GB DDR4 <br>
-                <b>Disk:</b> 200GB SSD <br>
-                <b>Network:</b> 1 Gbps <br>
-                <b>Anti ddos:</b> 400 GBs max</p>
+            <ul class="list-unstyled">
+                <li> CPU</b>: Intel Xeon E5-1620v2 </li>
+                <li> Cores:</b> 4 </li>
+                <li> RAM:</b> 16 GB DDR4 </li>
+                <li> Disk:</b> 200GB SSD </li>
+                <li> Network:</b> 1 Gbps </li>
+                <li> Anti ddos:</b> 400 GBs max /li>
+            </ul>
         </div>
         <div id="menu2" class="tab-pane fade">
-            <p>
-                Login server : ONLINE <br> Game server : ONLINE <br>
-            </p>
+            <ul class="list-unstyled">
+                <li> Login server : ONLINE </li>
+                <li> Game server : ONLINE </li>
+            </ul>
         </div>
     </div>
 
@@ -38,15 +42,19 @@
             <a href="{{route('register')}}"> <div class="quick"><span class="glyphicon glyphicon-chevron-right"> </span> Registration </div></a>
         @endif
         <div class="quick" data-toggle="collapse" data-target="#download"> <span class="glyphicon glyphicon-chevron-down"> </span> Download </div>
-        <div id="download" class="collapse drops" style="padding: 15px;">
-            <ul> <a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 1 </a></ul>
-            <ul> <a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 2 </a></ul>
-            <ul> <a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 3 </a></ul>
+        <div id="download" class="collapse drops" style="padding: 15px 15px 15px 40px;">
+            <ul class="list-unstyled">
+                <li><a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 1 </a></li>
+                <li><a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 2 </a></li>
+                <li><a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 3 </a></li>
+            </ul>
         </div>
-        <div class="quick" data-toggle="collapse" data-target="#vote"> <span class="glyphicon glyphicon-chevron-down"> </span> Vote </div>
-        <div id="vote" class="collapse drops" style="padding: 15px;">
-            <ul> <a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 1 </a></ul>
-            <ul> <a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 2 </a></ul>
+        <div class="quick" data-toggle="collapse" data-target="#votes"> <span class="glyphicon glyphicon-chevron-down"> </span> Vote </div>
+        <div id="votes" class="collapse drops" style="padding: 15px 15px 15px 40px;">
+            <ul class="list-unstyled">
+                <li><a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 1 </a></li>
+                <li><a href=""><span class="glyphicon glyphicon-chevron-right"> </span> Link 2 </a></li>
+            </ul>
         </div>
     </div>
 

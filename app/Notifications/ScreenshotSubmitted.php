@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Notifications;
+namespace L2\Notifications;
 
-use App\Screenshot;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use L2\Screenshot;
 
 class ScreenshotSubmitted extends Notification
 {

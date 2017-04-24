@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea rows="10" class="form-control" name="content" required></textarea>
+                <textarea rows="10" class="form-control" name="content" id="content" required></textarea>
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-default">Reply</button>

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace L2\Http\Requests;
 
-use App\Screenshot;
 use Illuminate\Foundation\Http\FormRequest;
+use L2\Screenshot;
 
 class FileUpload extends FormRequest
 {

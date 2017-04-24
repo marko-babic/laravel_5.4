@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace L2\Http\Controllers;
 
-use App\Screenshot;
-use App\Ticket;
 use Auth;
+use L2\Screenshot;
+use L2\Ticket;
+use L2\Topic;
 
 class HomeController extends Controller
 {
@@ -22,6 +23,7 @@ class HomeController extends Controller
             $info["screenshot"] = Screenshot::canupload();
             $info["cansubmit"] = Ticket::cansubmit();
             $info["notifications"] = Auth::User()->notifications()->paginate(10);
+            $info["ticket_topic"] = Topic::all();
 
 
             if(!$info["screenshot"])

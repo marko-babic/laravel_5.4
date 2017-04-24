@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace L2;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -89,21 +89,21 @@ class Ticket extends Model
 
     public function replies()
     {
-        return $this->hasMany('\App\TicketReply', 'ticket_id')->with('user');
+        return $this->hasMany('\L2\TicketReply', 'ticket_id')->with('user');
     }
 
     public function user()
     {
-        return $this->belongsTo('\App\User','account_id');
+        return $this->belongsTo('\L2\User','account_id');
     }
 
     public function topic()
     {
-        return $this->belongsTo('\App\Topic');
+        return $this->belongsTo('\L2\Topic');
     }
 
     public function status()
     {
-        return $this->belongsTo('\App\TicketStatus','status_id');
+        return $this->belongsTo('\L2\TicketStatus','status_id');
     }
 }

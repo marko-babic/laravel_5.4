@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace L2\Http\Controllers;
 
-use App\Http\Requests\TicketStore;
-use App\Ticket;
-use App\TicketReply;
-use App\TicketStatus;
 use Auth;
+use L2\Http\Requests\TicketStore;
+use L2\Ticket;
+use L2\TicketReply;
+use L2\TicketStatus;
 
 
 class TicketController extends Controller

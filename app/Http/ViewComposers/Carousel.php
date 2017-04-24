@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\ViewComposers;
+namespace L2\Http\ViewComposers;
 
-use App\Screenshot;
 use Illuminate\View\View;
+use L2\Screenshot;
 
 
 class Carousel

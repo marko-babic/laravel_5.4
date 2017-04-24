@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Notifications;
+namespace L2\Notifications;
 
-use App\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use L2\Ticket;
 
 class TicketSubmitted extends Notification
 {

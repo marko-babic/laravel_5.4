@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace L2\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -14,7 +14,7 @@ class CarouselProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('layouts.carousel', 'App\Http\ViewComposers\Carousel');
+        View::composer('layouts.carousel', 'L2\Http\ViewComposers\Carousel');
     }
 
     /**

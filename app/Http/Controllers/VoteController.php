@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace L2\Http\Controllers;
 
 
-use App\Http\Requests\VoteVerify;
-use App\Screenshot;
-use App\Vote;
 use Auth;
+use L2\Http\Requests\VoteVerify;
+use L2\Screenshot;
+use L2\Vote;
 
 class VoteController extends Controller
 {
