@@ -29,12 +29,11 @@ a website for a game I've spent long time playing, Lineage 2.
 
 
 ## Coming soon
-- Image voting system to get reward
 - Server voting system on sites like hopzone
 - Integrated donation system
 
 
 ## Other stuff used
 - Slick carousel (http://kenwheeler.github.io/slick/)
-- jQuery text editor (http://jqueryte.com/)
+- TinyMCE text editor (https://www.tinymce.com/)
 
