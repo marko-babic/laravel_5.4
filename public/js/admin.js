@@ -91,8 +91,16 @@ function markAsRead(id) {
 }
 
 $(document).on('ready', function () {
-    $("#jqte").jqte();
-
+    tinymce.init({
+        selector: "textarea",
+        height: "400",
+        forced_root_block : "",
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
+    });
 
     $(document).on("click", '.ad-screen', function () {
         var caption = $('#caption');

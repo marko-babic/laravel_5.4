@@ -11,20 +11,6 @@ class TicketReply extends Model
         'ticket_id','content','account_id'
     ];
 
-    public static function cansubmitreply($id)
-    {
-        $last = self::where('ticket_id', $id)->orderBy('created_at','desc')->first();
-
-        if($last) {
-            if ($last->account_id == Auth::id()) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     /*
      * Check whether user can submit reply to the active ticket
@@ -34,8 +20,28 @@ class TicketReply extends Model
      * @return boolean
      */
 
-    public function tickets()
+    public static function cansubmitreply($id)
     {
-        return $this->belongsTo('\App\Ticket');
+        $last = self::where('ticket_id', $id)->orderBy('created_at','desc')->with('ticket')->first();
+
+        if($last) {
+            if ($last->account_id == Auth::id() || !$last->ticket->isActive($id)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('\App\User','account_id');
+    }
+
+    public function ticket()
+    {
+        return $this->belongsTo('App\Ticket','ticket_id');
     }
 }

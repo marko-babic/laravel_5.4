@@ -59,8 +59,8 @@
             <div class="news">
                 <div class="title cp" data-toggle="collapse" data-target="#submitticket"> <span class="glyphicon glyphicon-chevron-down"> </span> Submit / review ticket </div>
                     <div id="submitticket" class="collapse drops content" style="padding: 40px;">
-                        @include('tickets.all-tickets')
-                        @include('tickets.form')
+                        @include('tickets.user.all-tickets')
+                        @include('tickets.user.form')
                     </div>
             </div>
         </div>
@@ -71,17 +71,9 @@
         </div>
             <div class="row" style="margin-left: 5px;">
                 <div class="news">
-                    <div class="title"> notifications history</div>
+                    <div class="title"> history</div>
                     <div class="content">
-                        <ul>
-                            @foreach($info["notifications"] as $notification)
-                                @php
-                                $view = 'notifications.'.last(explode('\\',$notification["type"]));
-                                Auth::User()->notifications()->find($notification->id)->markAsRead();
-                                @endphp
-                                @include($view)
-                            @endforeach
-                        </ul>
+                        @include('notifications.user-history')
                     </div>
                 </div>
                 <div class="news text-center">

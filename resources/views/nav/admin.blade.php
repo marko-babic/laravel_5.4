@@ -20,9 +20,5 @@
 @section('admin_scripts')
     @include('js.admin-variables')
 <script src="{{ asset('js/admin.js') }}"></script>
-<script src="{{ asset('js/jquery-te-1.4.0.min.js') }}"></script>
-@endsection
-
-@section('admin_css')
-    <link href="{{ asset('css/jquery-te-1.4.0.css') }}" rel="stylesheet">
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 @endsection

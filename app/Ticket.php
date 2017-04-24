@@ -9,7 +9,7 @@ use Misc;
 class Ticket extends Model
 {
     protected $fillable = [
-        'topic_id','content','account_id','status_id'
+        'display_id','topic_id','content','account_id','status_id'
     ];
 
     /*
@@ -24,7 +24,7 @@ class Ticket extends Model
 
         foreach($tickets as $ticket)
         {
-            if($ticket->status_id == 2 || $ticket->status_id == 3) {
+            if($ticket->status_id == 1) {
                 return false;
             } elseif ($ticket->status_id == 1 && (!Misc::checkTime($ticket->created_at, config('custom.ticket_limit')))) {
                 return false;
@@ -50,11 +50,17 @@ class Ticket extends Model
         return $tickets;
     }
 
+    public function isActive($id)
+    {
+        return $this->whereId($id)->where('status_id',1)->exists();
+    }
+
     /*
      * Gets all user info for admin page
      *
      * @return array $tickets all ticket info
      */
+
 
     public static function admin_info($id)
     {
@@ -69,7 +75,7 @@ class Ticket extends Model
 
     public static function alltickets()
     {
-        return self::with(['user','topic','replies','status'])->get();
+        return self::with(['user','topic','replies','status'])->orderBy('created_at','desc')->get();
     }
 
     public static function ticket_info()
@@ -83,7 +89,7 @@ class Ticket extends Model
 
     public function replies()
     {
-        return $this->hasMany('\App\TicketReply', 'ticket_id');
+        return $this->hasMany('\App\TicketReply', 'ticket_id')->with('user');
     }
 
     public function user()
@@ -98,6 +104,6 @@ class Ticket extends Model
 
     public function status()
     {
-        return $this->belongsTo('\App\TicketStatus');
+        return $this->belongsTo('\App\TicketStatus','status_id');
     }
 }

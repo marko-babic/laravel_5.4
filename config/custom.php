@@ -5,7 +5,7 @@ return [
     /*
      * @ticket_limit: time limit expiration, set in hours, for ticket submit (applies only to new tickets, not replying).
      */
-    'ticket_limit' => 24,
+    'ticket_limit' => 0,
 
     /*
      * @screenshot_limit : time limit expiration, set in hours, for image uploads. e.g. => 4 would allow user to upload

@@ -1,4 +1,4 @@
-<form action="{{route('ticket_reply',['id' => $info["ticket"]->id])}}" method="post">
+<form action="{{route('ticket_reply',['id' => $ticket->id])}}" method="post" style="margin-top: 20px;">
     {{ csrf_field() }}
     <div class="form-group">
         <label for="content">Content</label>

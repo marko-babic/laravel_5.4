@@ -1,5 +1,5 @@
 @if(count($info["ticket"]))
-    <table class="table" width="100%">
+    <table class="table tickets" width="100%">
         <thead>
             <tr class="text-center">
                 <td > Subject </td>
@@ -12,9 +12,9 @@
         @foreach($info["ticket"] as $ticket)
             <tr class="text-center">
                 <td> {{$ticket->topic->text}} </td>
-                <td> {{$ticket->status->text}} </td>
+                <td> <span class="{{Misc::ticketColor($ticket->status->text)}}">{{$ticket->status->text}} </span></td>
                 <td> {{$ticket->created_at->diffForHumans()}} </td>
-                <td> <a href="{{route('ticket.edit', ['id' => $ticket->id])}}" target="_blank" title="Click to check ticket">Check </a></td>
+                <td> <a href="{{route('ticket.edit', ['id' => $ticket->id])}}" target="_blank" title="Click to check ticket">Review </a></td>
             </tr>
         @endforeach
         </tbody>

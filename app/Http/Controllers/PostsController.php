@@ -37,7 +37,7 @@ class PostsController extends Controller
             'author' => Auth::id()
         ]);
 
-        return redirect('/home');
+        return redirect('home');
     }
 
     public function show($id)
@@ -65,7 +65,7 @@ class PostsController extends Controller
             'author' => Auth::id(),
         ]);
 
-        return redirect('/home');
+        return redirect('home');
     }
 
     public function destroy($id)

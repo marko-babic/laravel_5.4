@@ -9,9 +9,11 @@ class UserTicketReply extends Notification
 {
     use Queueable;
 
-    public function __construct()
+    private $ticket_id;
+
+    public function __construct($ticket_id)
     {
-        //
+        $this->ticket_id = $ticket_id;
     }
 
     public function via($notifiable)
@@ -22,7 +24,7 @@ class UserTicketReply extends Notification
     public function toArray($notifiable)
     {
         return [
-
+            'ticket_id' => $this->ticket_id,
         ];
     }
 }

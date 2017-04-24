@@ -9,9 +9,11 @@ class TicketReply extends Notification
 {
     use Queueable;
 
-    public function __construct()
+    protected $ticket;
+
+    public function __construct(\App\TicketReply $ticket)
     {
-        //
+        $this->ticket = $ticket;
     }
 
     public function via($notifiable)
@@ -23,7 +25,7 @@ class TicketReply extends Notification
     {
         return [
             'login' => \Auth::User()->login,
-            'url' => route('ticket.index'),
+            'url' => route('ticket.edit',['id' => $this->ticket->ticket_id]),
         ];
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Helpers;
 
-use \Carbon\Carbon;
+use Carbon\Carbon;
 
 
 class MiscFunctions
 {
+
     /*
     * @author Pedro Pinheiro (https://github.com/pedroppinheiro).
     */
@@ -53,5 +54,16 @@ class MiscFunctions
         }
 
         return true;
+    }
+
+    public static function ticketColor($arg)
+    {
+        $color = [
+            'Active' => 'yellow',
+            'Closed' => 'red',
+            'Solved' => 'green'
+        ];
+
+        return $color[$arg];
     }
 }

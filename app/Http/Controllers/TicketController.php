@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TicketStore;
 use App\Ticket;
 use App\TicketReply;
+use App\TicketStatus;
 use Auth;
 
 
@@ -18,12 +19,13 @@ class TicketController extends Controller
 
     public function index()
     {
-        return view('tickets.index')->with('tickets', Ticket::alltickets());
+        return view('tickets.admin.index')->with('tickets', Ticket::alltickets());
     }
 
     public function store(TicketStore $request)
     {
         Ticket::create([
+            'display_id' => strtoupper(str_random(4)) . '-' . strtoupper(str_random(4)) . '-' . strtoupper(str_random(4)),
             'topic_id' => request('option'),
             'content' => request('content'),
             'account_id' => Auth::id(),
@@ -39,11 +41,17 @@ class TicketController extends Controller
     {
         if($test = $this->checkOwner($id)) {
             if(Auth::user()->isAdmin()) {
-                return view('tickets.edit')->with('info', Ticket::admin_info($id));
+                return view('tickets.admin.edit')->with(
+                    [
+                        'info' => Ticket::admin_info($id),
+                        'status' => TicketStatus::all()
+                    ]);
             } else {
-                $info["ticket"] = Ticket::admin_info($id);
-                $info["cansubmit"] = TicketReply::cansubmitreply($id);
-                return view('tickets.replies')->with('info', $info);
+                return view('tickets.user.replies')->with(
+                    [
+                        'ticket' => Ticket::admin_info($id),
+                        'cansubmit' => TicketReply::cansubmitreply($id),
+                    ]);
             }
         }
 
@@ -78,7 +86,7 @@ class TicketController extends Controller
 
         if(Auth::user()->isAdmin()) {
             Ticket::whereId($id)->update(['status_id' => request('status')]);
-            Auth::user()->notifyUserTicket($user_id);
+            Auth::user()->notifyUserTicket($user_id, $id);
             return redirect('/ticket');
         }
 

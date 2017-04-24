@@ -10,7 +10,7 @@ use Misc;
 class FileController extends Controller
 {
 
-    protected $state = [
+    private $state = [
         'default' => 0,
         'approved' => 1,
         'denied' => 2,

@@ -10,7 +10,7 @@
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea id="jqte" rows="20" type="text" class="form-control" name="content" placeholder="Content" required></textarea>
+                <textarea class="form-control" name="content" placeholder="Content" required></textarea>
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-default">Submit</button>

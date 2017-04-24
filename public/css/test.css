@@ -1,4 +1,14 @@
+.green {
+    color: green;
+}
 
+.red {
+    color: red;
+}
+
+.yellow {
+    color: yellow;
+}
 
 
 .navbar {
@@ -24,8 +34,11 @@
     border-radius: 5px;
     color: white;
 }
+.tickets {
+    margin-top: 20px;
+}
 
-.link:hover {
+.tickets a:hover,.link:hover {
     background-color: red;
 }
 
@@ -60,9 +73,10 @@ hr {
     padding-left: 0;
 }
 
-.ticket-question {
+.ticket-question, .ticket-text {
     margin-top: 20px;
 }
+
 
 .quick {
     background: rgba(33, 70, 78, 0.9);

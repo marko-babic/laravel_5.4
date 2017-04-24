@@ -3,7 +3,7 @@
 namespace App;
 
 use Auth;
-use \Carbon\Carbon;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
@@ -12,6 +12,12 @@ class Vote extends Model
     protected $fillable = [
         'account_id', 'screenshot_id'
     ];
+
+    /*
+     * check whether user is allowed to vote for screenshot.
+     *
+     * @return boolean
+     */
 
     public static function canvote($id)
     {
@@ -27,12 +33,16 @@ class Vote extends Model
         return false;
     }
 
+    /*
+     * @return int number of votes left
+     */
+
     public static function votesleft()
     {
         $votes = Vote::TimeLimit()->get();
         $votes["left"] = config('custom.vote_limit') - count($votes);
 
-        if ($votes["left"] == 0) {
+        if ($votes["left"] === 0) {
             $votes["next"] = Carbon::now()->diffInMinutes(array_first($votes)->created_at);
         }
 

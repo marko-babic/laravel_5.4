@@ -2,7 +2,7 @@
 
 @section('body')
         <div class="row">
-            <div class="col-md-7" style="padding-top: 20px">
+            <div class="col-md-7" style="padding: 20px 10px 20px 10px;">
                 <!-- to be changed soon -->
                 @yield('content')
 

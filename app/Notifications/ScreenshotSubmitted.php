@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Screenshot;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
@@ -9,9 +10,11 @@ class ScreenshotSubmitted extends Notification
 {
     use Queueable;
 
-    public function __construct()
+    protected $screen;
+
+    public function __construct(Screenshot $screen)
     {
-        //
+        $this->screen = $screen;
     }
 
     public function via($notifiable)
