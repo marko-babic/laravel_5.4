@@ -11,36 +11,95 @@
 }
 
 
+/**** NAVBAR ****/
+
 .navbar {
     background: rgba(29, 58, 64, 0.7);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     color: white;
-    margin: 0px;
-    text-align: left;
+    margin: 0;
+    padding-left: 0;
 }
 
-.link {
-    display: inline-block;
-    font-family: Cambria, Georgia, serif;
-    font-size: 20px;
-    padding: 15px 30px 15px 30px;
+    .navbar > li {
+        display: inline-block;
+        font-family: Cambria, Georgia, serif;
+        font-size: 20px;
+        padding: 15px 30px 15px 30px;
+        text-transform: uppercase;
+    }
+
+    .navbar > li:hover {
+        background-color: red;
+    }
+
+    .navbar > li a:hover {
+        color: white;
+    }
+
+    .navbar .badge {
+        background-color: white;
+        color: red;
+        font-weight: bold;
+    }
+
+
+/**** FOOTER ****/
+
+.site-footer {
+    background: rgba(33,70,78, 0.2);
+    margin: 25px 0 0 0;
 }
+
+    .site-footer h3 {
+        margin-left: 40px;
+    }
+
+    .site-footer ul {
+        margin-top: 30px;
+        list-style-type: none;
+    }
+
+    .site-footer li {
+        margin-bottom: 15px;
+    }
+
+    .site-footer hr {
+        background-color: white;
+    }
+
+    .site-footer p {
+        margin-top: 30px;
+        text-align: justify;
+    }
+
+    .site-footer > div {
+        padding: 20px;
+    }
+
+.bot-nav {
+
+}
+
+
+
 
 .container {
     background: rgba(29, 58, 64, 0.3);
-    border: 0px solid white;
-
+    border: 0 solid white;
     border-radius: 5px;
     color: white;
 }
+
 .tickets {
     margin-top: 20px;
 }
 
-.tickets a:hover,.link:hover {
+.tickets a:hover {
     background-color: red;
 }
+
 
 hr {
     background-color: #d7dd44;

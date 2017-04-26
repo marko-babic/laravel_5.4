@@ -1,32 +1,31 @@
 <div class="row">
-    <div class="navbar">
-        <div class="link"> <a href="{{ route('index')}}">HOME</a></div>
-        <div class="link"> <a href="{{ route('start')}}">START</a> </div>
-        <div class="link"> <a href="{{ route('rules')}}">RULES</a></div>
-        <div class="link"> <a href="{{ route('faq')}}">FAQ</a> </div>
-        <div class="link">
-            <a href="{{ route('login')}}">ACCOUNT
+    <ul class="navbar">
+        <li><a href="{{ route('index')}}"> Home </a></li>
+        <li><a href="{{ route('start')}}"> Start </a></li>
+        <li><a href="{{ route('rules')}}"> Rules </a></li>
+        <li><a href="{{ route('faq')}}"> Faq </a></li>
+        <li>
+            <a href="{{ route('login')}}"> Account
                 @if(Auth::check())
                     @php
                         $new_count = count(Auth::User()->unreadNotifications);
                     @endphp
                     @if($new_count > 0)
-                        <span class="badge" title="{{$new_count}} new notifications"
-                              style="background-color: white; color: red; font-weight: bold">
-                        {{$new_count}}
-                    </span>
+                        <span class="badge" title="{{$new_count}} new notifications">
+                            {{$new_count}}
+                        </span>
                     @endif
                 @endif
             </a>
-        </div>
+        </li>
         @if(Auth::check())
-            <div class="link pull-right">
+            <li class="pull-right">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> LOGOUT  </a>
-            </div>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            </li>
+            <form class="hidden" id="logout-form" action="{{ route('logout') }}" method="POST">
                 {{ csrf_field() }}
             </form>
         @endif
-    </div>
+    </ul>
     <hr>
 </div>
