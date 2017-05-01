@@ -178,6 +178,7 @@ return [
         L2\Providers\EventServiceProvider::class,
         L2\Providers\RouteServiceProvider::class,
         L2\Providers\CarouselProvider::class,
+        L2\Providers\NavbarProvider::class,
 
     ],
 

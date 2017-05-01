@@ -24,6 +24,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Route::pattern('ticket', '[0-9]+');
+        Route::pattern('nav', '([A-Za-z0-9\-\/]+)');
 
         parent::boot();
     }

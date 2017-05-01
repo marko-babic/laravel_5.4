@@ -1,9 +1,9 @@
 <script>
     var ajax_admin_url = {
-        ticket_delete: "{{url('ticket')}}",
+        ticket_delete: "{{url('home/ticket')}}",
         all_posts: "{{route('posts.index')}}",
-        action_screenshot: "{{url('screenshot')}}",
-        remove_post: "{{url('posts')}}",
+        action_screenshot: "{{url('home/screenshot')}}",
+        remove_post: "{{url('home/posts')}}",
         mark_as_read: "{{route('notification')}}"
     };
 </script>

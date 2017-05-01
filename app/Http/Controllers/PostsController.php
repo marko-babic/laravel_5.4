@@ -3,8 +3,8 @@
 namespace L2\Http\Controllers;
 
 use Auth;
+use L2\Navbar;
 use L2\Post;
-use L2\PostDescription;
 
 class PostsController extends Controller
 {
@@ -15,7 +15,7 @@ class PostsController extends Controller
     function __construct()
     {
         $this->middleware(['auth','admin'],['except' => ['index']]);
-        $this->sites = PostDescription::all();
+        $this->sites = Navbar::all();
     }
 
     public function index()

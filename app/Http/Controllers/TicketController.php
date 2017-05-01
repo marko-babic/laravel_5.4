@@ -72,27 +72,27 @@ class TicketController extends Controller
      * @return redirect
      */
 
-    public function reply($id)
+    public function reply(Ticket $ticket)
     {
-        if (!$user_id = $this->checkOwner($id)) {
+        if (!$user_id = $this->checkOwner($ticket->id)) {
             return redirect('/home');
         }
 
         TicketReply::create([
-            'ticket_id' => $id,
+            'ticket_id' => $ticket->id,
             'content' => request('content'),
             'account_id' => Auth::id()
         ]);
 
         if(Auth::user()->isAdmin()) {
-            Ticket::whereId($id)->update(['status_id' => request('status')]);
-            Auth::user()->notifyUserTicket($user_id, $id);
-            return redirect('/ticket');
+            Ticket::whereId($ticket->id)->update(['status_id' => request('status')]);
+            Auth::user()->notifyUserTicket($user_id, $ticket->id);
+            return redirect()->route('ticket.index');
         }
 
         Auth::user()->notifyAdmin('ticket_reply');
         session()->flash('ticket_message', 'Ticket was successfully replied.');
-        return redirect('/home#submitticket');
+        return redirect()->route('home');
     }
 
     /*
