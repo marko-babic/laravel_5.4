@@ -25,6 +25,7 @@ Route::group(['prefix' => 'home'], function() {
     Route::resource('ticket', 'TicketController',['except' => 'reply']);
     Route::resource('screenshot','FileController');
     Route::post('vote', 'VoteController@store')->name('vote');
+    Route::resource('navbar','NavbarController');
 });
 
 Route::get('{nav}', ['uses' => 'MainWebController@generate'])->name('nav');

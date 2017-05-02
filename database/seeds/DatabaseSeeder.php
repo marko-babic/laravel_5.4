@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->command->info('Adding fixed data ..');
+
         /*
          * fill ticket topics
          */
@@ -55,27 +56,47 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
-        DB::table('post_description')->insert([
+        /*
+         * fill default navbar
+         */
+
+        DB::table('navbar')->insert([
             [
                 'id' => 1,
-                'description' => 'Main page'
+                'description' => 'Main page',
+                'shortcode' => '/',
+                'navbar' => 'home'
             ],
             [
                 'id' => 2,
-                'description' => 'Start'
+                'description' => 'Start',
+                'shortcode' => 'start',
+                'navbar' => 'start'
             ],
             [
                 'id' => 3,
-                'description' => 'Rules'
+                'description' => 'Rules',
+                'shortcode' => 'rules',
+                'navbar' => 'rules'
             ],
             [
                 'id' => 4,
-                'description' => 'Faq'
+                'description' => 'Faq',
+                'shortcode' => 'faq',
+                'navbar' => 'faq'
             ],
             [
                 'id' => 5,
-                'description' => 'Donate'
-            ]
+                'description' => 'Donate',
+                'shortcode' => 'donate',
+                'navbar' => 'donate'
+            ],
+            [
+                'id' => 6,
+                'description' => 'Account',
+                'shortcode' => 'home',
+                'navbar' => 'account'
+            ],
         ]);
 
         $this->command->info('Successfully added !');

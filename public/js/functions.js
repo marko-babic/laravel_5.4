@@ -1,3 +1,5 @@
+var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
 $('.screen').click(function () {
 
     var src = $(this).attr('src').replace('screenshots_thumbnail', 'screenshots');

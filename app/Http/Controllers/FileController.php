@@ -63,15 +63,11 @@ class FileController extends Controller
      * Approve screenshot to be displayed in carousel.
      */
 
-    public function update($id)
+    public function update(Screenshot $screenshot)
     {
-        if (!$this->sExists($id))
-            return false;
-
-        $screenshot = Screenshot::whereId($id);
         $screenshot->update(['approved' => $this->state['approved']]);
 
-        Auth::User()->notifyUser("screenshot", $this->state['approved'], $screenshot->first());
+        Auth::User()->notifyUser("screenshot", $this->state['approved'], $screenshot);
     }
 
 
@@ -79,27 +75,12 @@ class FileController extends Controller
      * Set screenshot as denied, not actually delete it. File and thumbnail remain on the server.
      */
 
-    public function sExists($id)
+    public function destroy(Screenshot $screenshot)
     {
-        if (Screenshot::whereId($id)->exists())
-            return true;
 
-        return false;
-    }
-
-    /*
-     * Check whether screenshot with given id actually exists before we try to use it.
-     */
-
-    public function destroy($id)
-    {
-        if (!$this->sExists($id))
-            return response()->json(['response' => 'error']);
-
-        $screenshot = Screenshot::whereId($id);
         $screenshot->update(['approved' => $this->state['denied']]);
 
-        Auth::User()->notifyUser("screenshot", $this->state['denied'], $screenshot->first());
+        Auth::User()->notifyUser("screenshot", $this->state['denied'], $screenshot);
 
         return response()->json(['response' => 'success']);
     }

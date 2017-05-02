@@ -3,6 +3,7 @@
 namespace L2\Http\Controllers;
 
 use Auth;
+use L2\Http\Requests\PostVerify;
 use L2\Navbar;
 use L2\Post;
 
@@ -28,15 +29,8 @@ class PostsController extends Controller
         return view('posts.create')->with(['sites' => $this->sites]);
     }
 
-    public function store()
+    public function store(PostVerify $request)
     {
-        $this->validate(request(), [
-            'title' => 'required',
-            'content' => 'required',
-            'description' => 'required',
-            ]
-        );
-
         Post::create([
             'title' => request('title'),
             'content' => request('content'),
@@ -44,28 +38,21 @@ class PostsController extends Controller
             'description_id' => request('description'),
         ]);
 
-        return redirect('home');
+        return redirect()->route('home');
     }
 
-    public function show($id)
+    public function show(Post $post)
     {
-        return Post::find($id);
+        return $post;
     }
 
-    public function edit($id)
+    public function edit(Post $post)
     {
-        return view('posts.edit')->with(['post' => Post::find($id), 'sites' => $this->sites]);
+        return view('posts.edit')->with(['post' => $post, 'sites' => $this->sites]);
     }
 
-    public function update($id)
+    public function update(PostVerify $request, Post $post)
     {
-        $this->validate(request(), [
-                'title' => 'required',
-                'content' => 'required'
-            ]
-        );
-
-        $post = Post::whereId($id);
         $post->update([
             'title' => request('title'),
             'content' => request('content'),
@@ -73,11 +60,11 @@ class PostsController extends Controller
             'description_id' => request('description'),
         ]);
 
-        return redirect('home');
+        return redirect()->route('home');
     }
 
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        return Post::destroy($id);
+        $post->delete();
     }
 }

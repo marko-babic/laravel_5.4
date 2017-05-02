@@ -1,5 +1,7 @@
 @extends('nav.index')
 
 @section('content_main')
-    {!! $post->content !!}
+    @if(isset($post))
+        {!! $post->content !!}
+    @endif
 @endsection

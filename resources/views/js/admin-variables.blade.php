@@ -4,6 +4,7 @@
         all_posts: "{{route('posts.index')}}",
         action_screenshot: "{{url('home/screenshot')}}",
         remove_post: "{{url('home/posts')}}",
-        mark_as_read: "{{route('notification')}}"
+        mark_as_read: "{{route('notification')}}",
+        navbar: "{{url('home/navbar')}}"
     };
 </script>

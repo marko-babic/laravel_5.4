@@ -16,6 +16,8 @@ class CreateNavbarTable extends Migration
         Schema::create('navbar', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');
+            $table->string('shortcode');
+            $table->string('navbar');
         });
     }
 

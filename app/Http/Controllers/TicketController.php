@@ -37,20 +37,20 @@ class TicketController extends Controller
         return redirect('/home#submitticket');
     }
 
-    public function edit($id)
+    public function edit(Ticket $ticket)
     {
-        if($test = $this->checkOwner($id)) {
-            if(Auth::user()->isAdmin()) {
-                return view('tickets.admin.edit')->with(
-                    [
-                        'info' => Ticket::admin_info($id),
-                        'status' => TicketStatus::all()
-                    ]);
-            } else {
+        if(Auth::user()->isAdmin()) {
+            return view('tickets.admin.edit')->with(
+                [
+                    'info' => Ticket::admin_info($ticket->id),
+                    'status' => TicketStatus::all()
+                ]);
+        } else {
+            if($ticket->account_id == Auth::id()) {
                 return view('tickets.user.replies')->with(
                     [
-                        'ticket' => Ticket::admin_info($id),
-                        'cansubmit' => TicketReply::cansubmitreply($id),
+                        'ticket' => Ticket::admin_info($ticket->id),
+                        'cansubmit' => TicketReply::cansubmitreply($ticket->id),
                     ]);
             }
         }
@@ -58,10 +58,9 @@ class TicketController extends Controller
         return redirect('/home');
     }
 
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        if ($this->ticketExists($id))
-            Ticket::whereId($id)->forceDelete();
+        $ticket->delete();
     }
 
     /*
@@ -105,14 +104,6 @@ class TicketController extends Controller
             if ($ticket->account_id == Auth::id() || Auth::user()->isAdmin())
                 return $ticket->account_id;
         }
-
-        return false;
-    }
-
-    public function ticketExists($id)
-    {
-        if (Ticket::whereId($id)->exists())
-            return true;
 
         return false;
     }

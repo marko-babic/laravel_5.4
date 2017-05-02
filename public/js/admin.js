@@ -3,7 +3,7 @@ function checkDelete(id) {
         $.ajax({
             type: "DELETE",
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': csrf_token
             },
             url: ajax_admin_url.ticket_delete + '/' + id,
             success: function(result) {
@@ -47,7 +47,7 @@ function screenshotAction(id, action, text) {
         $.ajax({
             type: action,
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': csrf_token
             },
             url: ajax_admin_url.action_screenshot + '/' + id,
             success: function(result) {
@@ -66,7 +66,7 @@ function removePost(id){
         $.ajax({
             type: "DELETE",
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': csrf_token
             },
             url: ajax_admin_url.remove_post + '/' + id,
             success: function(result) {
@@ -80,7 +80,7 @@ function markAsRead(id) {
     $.ajax({
         type: "PUT",
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': csrf_token
         },
         data: {id: id},
         url: ajax_admin_url.mark_as_read,
@@ -90,7 +90,25 @@ function markAsRead(id) {
     });
 }
 
+function navRemove(id) {
+    if (confirm('Do you really want to remove this item?')) {
+        $.ajax({
+            type: "DELETE",
+            headers: {
+                'X-CSRF-TOKEN': csrf_token
+            },
+            url: ajax_admin_url.navbar + '/' + id,
+            success: function(result) {
+                location.reload();
+            }
+        });
+    }
+}
+
 $(document).on('ready', function () {
+
+    var nav_id = 0;
+
     tinymce.init({
         selector: "textarea",
         height: "400",
@@ -116,5 +134,49 @@ $(document).on('ready', function () {
 
     $('.note-read').click(function () {
         markAsRead($(this).parent().data('notification'));
+    });
+
+    $('.nav-edit').click(function(){
+        var action = $(this).data('action');
+        var id = $(this).parent().data('nav');
+
+        if(action == 'edit') {
+            $('#nav_description').val($(this).parent().text().trim());
+            $('#nav_shortcode').val($(this).parent().data('nav_short'));
+            $('#nav_navbar').val($(this).parent().data('nav_nav'));
+            $('#nav_btn').text('Save');
+            nav_id = id;
+        } else {
+            navRemove(id);
+        }
+    });
+
+    $('.navbar-add-form').submit(function(event){
+        var desc = $('#nav_description').val();
+        var short = $('#nav_shortcode').val();
+        var nav = $('#nav_navbar').val();
+        var type = 'POST';
+        var url;
+
+        if(nav_id > 0) {
+            type = 'PUT';
+            url = ajax_admin_url.navbar + '/' + nav_id;
+        } else {
+            url = ajax_admin_url.navbar;
+        }
+
+        if (confirm('Are you sure?')) {
+            $.ajax({
+                type: type,
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                url: url,
+                data: {description: desc, navbar: nav, shortcode: short},
+                success: function(result) {
+                    location.reload();
+                }
+            });
+        }
+
+        return false;
     });
 });

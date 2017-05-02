@@ -3,6 +3,7 @@
 namespace L2\Http\Controllers;
 
 use Auth;
+use L2\Navbar;
 use L2\Screenshot;
 use L2\Ticket;
 use L2\Topic;
@@ -19,7 +20,12 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::user()->isAdmin()){
-            return view('admin.admin-main')->with(['unread_notifications' => Auth::User()->unreadNotifications, 'nav_active' => $this->nav]);
+            return view('admin.admin-main')->with(
+                [
+                    'unread_notifications' => Auth::User()->unreadNotifications,
+                    'nav_active' => $this->nav,
+                    'a_nav' => Navbar::all(),
+                ]);
         } else {
             $info["ticket"] = Ticket::ticket_info();
             $info["screenshot"] = Screenshot::canupload();
