@@ -47,7 +47,6 @@ class FileController extends Controller
 
                 Misc::createThumbnail($original_path, $thumbnail_path, config('custom.thumbnail_x'), config('custom.thumbnail_y'));
 
-                Auth::User()->notifyAdmin('upload');
                 session()->flash('screenshot', 'Screenshot was successfully uploaded. Waiting for approval.');
 
                 /* in case apache doesn't set them properly */
@@ -66,8 +65,6 @@ class FileController extends Controller
     public function update(Screenshot $screenshot)
     {
         $screenshot->update(['approved' => $this->state['approved']]);
-
-        Auth::User()->notifyUser("screenshot", $this->state['approved'], $screenshot);
     }
 
 
@@ -79,9 +76,5 @@ class FileController extends Controller
     {
 
         $screenshot->update(['approved' => $this->state['denied']]);
-
-        Auth::User()->notifyUser("screenshot", $this->state['denied'], $screenshot);
-
-        return response()->json(['response' => 'success']);
     }
 }

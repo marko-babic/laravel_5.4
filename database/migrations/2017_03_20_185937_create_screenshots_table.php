@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateScreenshotsTable extends Migration
 {
@@ -18,7 +18,7 @@ class CreateScreenshotsTable extends Migration
             $table->string('description');
             $table->string('path');
             $table->boolean('approved')->nullable();
-            $table->integer('account_id');
+            $table->unsignedInteger('account_id');
             $table->integer('votes');
             $table->timestamps();
         });

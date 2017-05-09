@@ -32,7 +32,7 @@
                 <div id="changepass" class="collapse drops content">
                     <ul>
                         <li> If you wish to change password, logout, and click "Forgot your password?". </li>
-                        <li> Confirmation link will be sent to {{Auth::user()->email}}.</li>
+                        <li> Confirmation link will be sent to {{Auth::user()->desc()->web->email}}.</li>
                         <li> Click on the link provided in email. </li>
                         <li> Change password. </li>
                     </ul>

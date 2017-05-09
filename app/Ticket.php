@@ -4,12 +4,17 @@ namespace L2;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use L2\Events\NewTicket;
 use Misc;
 
 class Ticket extends Model
 {
     protected $fillable = [
         'display_id','topic_id','content','account_id','status_id'
+    ];
+
+    protected $events = [
+        'created' =>  NewTicket::class
     ];
 
     /*
@@ -89,21 +94,21 @@ class Ticket extends Model
 
     public function replies()
     {
-        return $this->hasMany('\L2\TicketReply', 'ticket_id')->with('user');
+        return $this->hasMany(TicketReply::class, 'ticket_id')->with('user');
     }
 
     public function user()
     {
-        return $this->belongsTo('\L2\User','account_id');
+        return $this->belongsTo(User::class,'account_id');
     }
 
     public function topic()
     {
-        return $this->belongsTo('\L2\Topic');
+        return $this->belongsTo(Topic::class);
     }
 
     public function status()
     {
-        return $this->belongsTo('\L2\TicketStatus','status_id');
+        return $this->belongsTo(TicketStatus::class,'status_id');
     }
 }

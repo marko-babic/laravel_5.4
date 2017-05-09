@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVotesTable extends Migration
 {
@@ -15,8 +15,8 @@ class CreateVotesTable extends Migration
     {
         Schema::create('screenshot_votes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('screenshot_id');
-            $table->integer('account_id');
+            $table->unsignedInteger('screenshot_id');
+            $table->unsignedInteger('account_id');
             $table->timestamps();
             $table->unique(['screenshot_id', 'account_id']);
         });

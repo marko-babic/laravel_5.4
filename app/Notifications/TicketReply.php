@@ -2,8 +2,10 @@
 
 namespace L2\Notifications;
 
+use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use L2\TicketReply as TReply;
 
 class TicketReply extends Notification
 {
@@ -11,7 +13,7 @@ class TicketReply extends Notification
 
     protected $ticket;
 
-    public function __construct(\L2\TicketReply $ticket)
+    public function __construct(Treply $ticket)
     {
         $this->ticket = $ticket;
     }
@@ -24,7 +26,7 @@ class TicketReply extends Notification
     public function toArray($notifiable)
     {
         return [
-            'login' => \Auth::User()->login,
+            'login' => Auth::User()->login,
             'url' => route('ticket.edit',['id' => $this->ticket->ticket_id]),
         ];
     }

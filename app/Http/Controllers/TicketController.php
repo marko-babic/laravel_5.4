@@ -32,7 +32,6 @@ class TicketController extends Controller
             'status_id' => 1
         ]);
 
-        Auth::User()->notifyAdmin('ticket');
         session()->flash('ticket_message', 'Ticket was successfully submitted.');
         return redirect('/home#submitticket');
     }
@@ -85,11 +84,11 @@ class TicketController extends Controller
 
         if(Auth::user()->isAdmin()) {
             Ticket::whereId($ticket->id)->update(['status_id' => request('status')]);
-            Auth::user()->notifyUserTicket($user_id, $ticket->id);
+            //Auth::user()->notifyUserTicket($user_id, $ticket->id);
             return redirect()->route('ticket.index');
         }
 
-        Auth::user()->notifyAdmin('ticket_reply');
+        //Auth::user()->notifyAdmin('ticket_reply');
         session()->flash('ticket_message', 'Ticket was successfully replied.');
         return redirect()->route('home');
     }

@@ -4,11 +4,16 @@ namespace L2;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use L2\Events\NewTicketReply;
 
 class TicketReply extends Model
 {
     protected $fillable = [
         'ticket_id','content','account_id'
+    ];
+
+    protected $events = [
+        'created' => NewTicketReply::class,
     ];
 
 
@@ -37,11 +42,11 @@ class TicketReply extends Model
 
     public function user()
     {
-        return $this->belongsTo('\L2\User','account_id');
+        return $this->belongsTo(User::class,'account_id');
     }
 
     public function ticket()
     {
-        return $this->belongsTo('L2\Ticket','ticket_id');
+        return $this->belongsTo(Ticket::class,'ticket_id');
     }
 }

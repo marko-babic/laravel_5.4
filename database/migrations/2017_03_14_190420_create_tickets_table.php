@@ -16,10 +16,10 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('display_id');
-            $table->integer('topic_id');
+            $table->unsignedInteger('topic_id');
             $table->longText('content');
-            $table->integer('account_id');
-            $table->integer('status_id');
+            $table->unsignedInteger('account_id');
+            $table->unsignedInteger('status_id');
             $table->timestamps();
         });
     }

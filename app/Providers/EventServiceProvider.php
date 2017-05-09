@@ -12,8 +12,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'L2\Events\SomeEvent' => [
-            'L2\Listeners\EventListener',
+        'L2\Events\NewScreenshot' => [
+            'L2\Listeners\notifyAdmin',
+        ],
+        'L2\Events\NewTicket' => [
+            'L2\Listeners\TicketNotifyAdmin'
+        ],
+        'L2\Events\NewTicketReply' => [
+            'L2\Listeners\TicketReplyNotify'
+        ],
+        'L2\Events\CheckedScreenshot' => [
+            'L2\Listeners\ScreenshotNotifyUser',
         ],
     ];
 

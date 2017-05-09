@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use L2\Http\Controllers\Controller;
 use L2\User;
+use L2\UserWeb;
 
 class RegisterController extends Controller
 {
@@ -49,8 +50,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'login' => 'required|max:20|unique:accounts',
-            'email' => 'required|email|max:255|unique:accounts',
-            'displayname' => 'required|max:20|unique:accounts',
+            'email' => 'required|email|max:255|unique:accounts_web',
+            'displayname' => 'required|max:20|unique:accounts_web',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -63,15 +64,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'id' => '',
-            'login' => $data['login'],
-            'email' => $data['email'],
-            'displayname' => $data['displayname'],
-            'lastactive' => 0,
-            'access_level' => 0,
-            'lastServer' => 1,
-            'password' => base64_encode(sha1($data['password'],true)),
-        ]);
+       $user = \DB::transaction(function ($data) use ($data) {
+           $user = User::create([
+               'id' => '',
+               'login' => $data['login'],
+               'lastactive' => 0,
+               'access_level' => 0,
+               'lastServer' => 1,
+               'password' => base64_encode(sha1($data['password'], true)),
+           ]);
+
+           UserWeb::create([
+               'account_id' => $user->id,
+               'displayname' => $data['displayname'],
+               'email' => $data['email'],
+           ]);
+
+           return $user;
+        });
+
+        return $user;
     }
 }

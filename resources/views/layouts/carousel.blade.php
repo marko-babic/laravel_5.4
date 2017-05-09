@@ -11,7 +11,7 @@
                                 <span id="img_vote_count{{$picture->id}}">{{$picture->votes}}</span>
                                 <span class="glyphicon glyphicon-heart" title="Votes"> </span>
                             </div>
-                            Author: {{$picture->user->displayname}}
+                            Author: {{$picture->user->web->displayname}}
                         </div>
                     </div>
             @endforeach
