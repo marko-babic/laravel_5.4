@@ -10,8 +10,7 @@ use L2\Post;
 class PostsController extends Controller
 {
 
-    private $sites = [
-    ];
+    private $sites;
 
     function __construct()
     {
@@ -32,10 +31,10 @@ class PostsController extends Controller
     public function store(PostVerify $request)
     {
         Post::create([
-            'title' => request('title'),
-            'content' => request('content'),
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
             'author' => Auth::id(),
-            'description_id' => request('description'),
+            'description_id' => $request->input('description'),
         ]);
 
         return redirect()->route('home');
@@ -48,16 +47,21 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
-        return view('posts.edit')->with(['post' => $post, 'sites' => $this->sites]);
+        $data = [
+            'post' => $post,
+            'sites' => $this->sites
+        ];
+
+        return view('posts.edit')->with($data);
     }
 
     public function update(PostVerify $request, Post $post)
     {
         $post->update([
-            'title' => request('title'),
-            'content' => request('content'),
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
             'author' => Auth::id(),
-            'description_id' => request('description'),
+            'description_id' => $request->input('description'),
         ]);
 
         return redirect()->route('home');

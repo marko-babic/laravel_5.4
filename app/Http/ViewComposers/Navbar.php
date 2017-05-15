@@ -5,20 +5,19 @@ namespace L2\Http\ViewComposers;
 use Illuminate\View\View;
 use L2\Navbar as Links;
 
-
 class Navbar
 {
-    protected $navbar = [];
-
+    private $navigationBar;
+    private $unreadNotifications;
 
     public function __construct()
     {
-        $this->navbar = Links::all();
+        $this->navigationBar = Links::all();
     }
 
     public function compose(View $view)
     {
-        $view->with(['navbar' => $this->navbar]);
+        $view->with(['navigationBar' => $this->navigationBar]);
     }
 }
 

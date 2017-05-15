@@ -1,7 +1,7 @@
 @extends('nav.index')
 
 @section('content')
-    <div style="padding-bottom: 150px;">
+    <div style="padding-bottom: 450px;">
     @if(session('ticket_message'))
         <div id="ticketmessage" class="alert alert-success">
             {{session('ticket_message')}}
@@ -26,7 +26,8 @@
 @endsection
 
 @section('content_main')
-        <div class="row" style="margin-left: 5px;">
+    <div class="home-wrap">
+        <div class="row">
             <div class="news">
                 <div class="title cp" data-toggle="collapse" data-target="#changepass"> <span class="glyphicon glyphicon-chevron-down"> </span> Change password </div>
                 <div id="changepass" class="collapse drops content">
@@ -39,23 +40,23 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-left: 5px;">
+        <div class="row">
             <div class="news">
                 <div class="title cp" data-toggle="collapse" data-target="#uploadfile"> <span class="glyphicon glyphicon-chevron-down"> </span> Upload cool screenshot </div>
                 <div id="uploadfile" class="collapse drops content">
                     <div style="padding: 20px 40px 20px 40px;">
-                        @if($info["screenshot"])
+                        @if($screenshotCanUpload)
                             @include('file.form')
                         @else
-                            <p>Last upload : {{$info["screenshot_time"]->created_at->diffForHumans()}} </p>
+                            <p>Last upload : {{$lasUpload->created_at->diffForHumans()}} </p>
                             <p>Next possible in
-                                : {{$info["screenshot_time"]->created_at->addHours(config('custom.screenshot_limit'))->diffForHumans()}} </p>
+                                : {{$lastUpload->created_at->addHours(config('custom.screenshot_limit'))->diffForHumans()}} </p>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-left: 5px;">
+        <div class="row">
             <div class="news">
                 <div class="title cp" data-toggle="collapse" data-target="#submitticket"> <span class="glyphicon glyphicon-chevron-down"> </span> Submit / review ticket </div>
                     <div id="submitticket" class="collapse drops content" style="padding: 40px;">
@@ -64,20 +65,21 @@
                     </div>
             </div>
         </div>
-        <div class="row" style="margin-left: 5px;">
+        <div class="row">
             <div class="news">
                 <div class="title cp"> <span class="glyphicon glyphicon-chevron-down"> </span> Vote / Claim reward</div>
             </div>
         </div>
-            <div class="row" style="margin-left: 5px;">
-                <div class="news">
-                    <div class="title"> history </div>
-                    <div class="content">
-                        @include('notifications.user-history')
-                    </div>
-                </div>
-                <div class="news text-center">
-                    {{$info["notifications"]->links()}}
+        <div class="row">
+            <div class="news">
+                <div class="title"> history </div>
+                <div class="content">
+                    @include('notifications.user-history')
                 </div>
             </div>
+            <div class="news text-center">
+                {{$notifications->links()}}
+            </div>
+        </div>
+    </div>
 @endsection

@@ -19,7 +19,7 @@ class FileUpload extends FormRequest
     public function rules()
     {
         return [
-                'screenshot' => 'required | mimes:jpeg,jpg,png,png | max: '.config('custom.screenshot_size'),
+                'screenshot' => 'required | image | max: '.config('custom.screenshot_size'),
                 'description' => 'required'
         ];
     }

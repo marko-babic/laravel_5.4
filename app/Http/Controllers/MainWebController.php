@@ -9,19 +9,21 @@ class MainWebController extends Controller
 {
     public function index()
     {
-        return view('posts.index')->with(['posts' => Post::where('description_id', 1)->orderBy('created_at','desc')->paginate(2), 'nav_active' => '/']);
+        $data = [
+            'posts' => Post::where('description_id', 1)->orderBy('created_at','desc')->paginate(2),
+            'navActive' => '/'
+        ];
+
+        return view('posts.index')->with($data);
     }
 
-    public function generate($slug)
+    public function generate(Navbar $nav)
     {
-        $navbar = Navbar::all();
+        $data = [
+            'post' => Post::where('description_id', $nav->id)->orderBy('created_at','desc')->first(),
+            'navActive' => $nav->shortcode,
+        ];
 
-        foreach($navbar as $nav) {
-            if($slug == $nav->shortcode) {
-                return view('nav.sub')->with(['post' => Post::where('description_id', $nav->id)->orderBy('created_at','desc')->first(), 'nav_active' => $slug]);
-            }
-        }
-
-        return redirect(route('index'));
+        return view('nav.sub')->with($data);
     }
 }

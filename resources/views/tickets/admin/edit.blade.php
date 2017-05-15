@@ -25,14 +25,14 @@
     @endforeach
     <hr>
 
-    <div style="padding: 20px 0 20px 0">
+    <div class="ticket-edit">
         Ticket status:
         <form action="{{route('ticket_reply',["id" => $info->id])}}" method="post">
             {{ csrf_field() }}
             <div class="form-group">
                 <select class="form-control" name="status">
                     @foreach($status as $st)
-                        @if($info->status_id == $st->id)
+                        @if($info->status_id === $st->id)
                             <option selected="selected" value="{{$st->id}}"> {{$st->text}} </option>
                         @else
                             <option value="{{$st->id}}"> {{$st->text}} </option>

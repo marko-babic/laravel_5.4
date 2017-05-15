@@ -14,7 +14,13 @@ class VoteVerify extends FormRequest
      */
     public function authorize()
     {
-        return Vote::canvote($this->id);
+        $voted = Vote::where(['screenshot_id' => $this->id, 'account_id' => $this->user()->id])->exists();
+
+        if ($voted || (Vote::TimeLimit()->count() === config('custom.vote_limit'))) {
+                return false;
+        }
+
+        return true;
     }
 
     /**
@@ -25,7 +31,12 @@ class VoteVerify extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required | integer'
+            'id' =>
+                [
+                    'required',
+                    'integer',
+                    'exists:screenshots,id'
+                ]
         ];
     }
 }

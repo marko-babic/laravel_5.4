@@ -16,7 +16,6 @@ class TicketReply extends Model
         'created' => NewTicketReply::class,
     ];
 
-
     /*
      * Check whether user can submit reply to the active ticket
      *
@@ -25,19 +24,11 @@ class TicketReply extends Model
      * @return boolean
      */
 
-    public static function cansubmitreply($id)
+    public static function isAllowedToReply($id)
     {
-        $last = self::where('ticket_id', $id)->orderBy('created_at','desc')->with('ticket')->first();
+        $last_submit = static::where('ticket_id', $id)->orderBy('created_at','desc')->with('ticket')->first();
 
-        if($last) {
-            if ($last->account_id == Auth::id() || !$last->ticket->isActive($id)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        return false;
+        return $last_submit ? $last_submit->account_id != Auth::id() && $last_submit->ticket->isActive($id) : false;
     }
 
     public function user()

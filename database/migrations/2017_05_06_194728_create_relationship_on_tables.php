@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreateRelationshipOnTables extends Migration
 {
@@ -13,6 +11,7 @@ class CreateRelationshipOnTables extends Migration
      */
     public function up()
     {
+        /*
         Schema::table('posts', function (Blueprint $table) {
             $table->foreign('description_id')->references('id')->on('navbar');
         });
@@ -36,7 +35,7 @@ class CreateRelationshipOnTables extends Migration
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->foreign('screenshot_id')->references('id')->on('screenshots');
         });
-
+        */
     }
 
     /**

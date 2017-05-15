@@ -25,13 +25,11 @@ class Ticket extends Model
 
     public static function cansubmit()
     {
-        $tickets = self::where(['account_id' => Auth::id()])->get();
+        $user_tickets = static::where('account_id',Auth::id())->get();
 
-        foreach($tickets as $ticket)
+        foreach($user_tickets as $ticket)
         {
-            if($ticket->status_id == 1) {
-                return false;
-            } elseif ($ticket->status_id == 1 && (!Misc::checkTime($ticket->created_at, config('custom.ticket_limit')))) {
+            if($ticket->status_id === 1 || !Misc::checkTime($ticket->created_at, config('custom.ticket_limit')))  {
                 return false;
             }
         }
@@ -40,19 +38,20 @@ class Ticket extends Model
     }
 
     /*
-     * Gets all user's active tickets
+     * Gets user's active ticket - there can only be one active at time.
      *
      * @return array $tickets all tickets info
      */
 
     public static function info()
     {
-        $tickets = self::where(['status_id' => 1, 'account_id' => Auth::id()])->with(['user', 'topic', 'replies', 'status'])->first();
+        $ticket = self::where(['status_id' => 1, 'account_id' => Auth::id()])->with(['user', 'topic', 'replies', 'status'])->first();
 
-        if($tickets)
-            TicketReply::cansubmitreply($tickets->id) ? $tickets["cansubmitreply"] = TicketReply::cansubmitreply($tickets->id) : false;
+        if(TicketReply::isAllowedToReply($ticket->id) && $ticket) {
+            $ticket["cansubmitreply"] = TicketReply::isAllowedToReply($ticket->id);
+        }
 
-        return $tickets;
+        return $ticket;
     }
 
     public function isActive($id)
@@ -69,7 +68,7 @@ class Ticket extends Model
 
     public static function admin_info($id)
     {
-        return self::whereId($id)->with(['user', 'topic', 'replies', 'status'])->first();
+        return static::whereId($id)->with(['user', 'topic', 'replies', 'status'])->first();
     }
 
     /*
@@ -78,14 +77,14 @@ class Ticket extends Model
      * @return array Ticket
      */
 
-    public static function alltickets()
+    public static function getAllTickets()
     {
-        return self::with(['user','topic','replies','status'])->orderBy('created_at','desc')->get();
+        return static::with(['user','topic','replies','status'])->orderBy('created_at','desc')->get();
     }
 
-    public static function ticket_info()
+    public static function getAllUserTickets()
     {
-        return self::where('account_id',Auth::id())->with(['user', 'topic', 'replies', 'status'])->get();
+        return static::where('account_id',Auth::id())->with(['user', 'topic', 'replies', 'status'])->get();
     }
 
     /*

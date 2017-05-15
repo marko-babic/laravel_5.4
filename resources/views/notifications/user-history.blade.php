@@ -1,9 +1,8 @@
 <ul>
-    @foreach($info["notifications"] as $notification)
+    @foreach($notifications as $notification)
         @php
-            $view = 'notifications.'.last(explode('\\',$notification["type"]));
             Auth::User()->notifications()->find($notification->id)->markAsRead();
         @endphp
-        @include($view)
+        @include($notification["view"])
     @endforeach
 </ul>

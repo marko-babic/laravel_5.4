@@ -38,8 +38,8 @@
             L2Testek 2017 all rights reserved.
         </span>
         <span class="bot-nav pull-right">
-            @foreach($navbar as $nav)
-                <a href="{{route('nav', ['nav' => $nav->shortcode])}}"> {{$nav->navbar}} </a> |
+            @foreach($navigationBar as $navBar)
+                <a href="{{route('nav', ['nav' => $navBar->shortcode])}}"> {{$navBar->navbar}} </a> |
             @endforeach
                 <a href="#">Top <span class="glyphicon glyphicon-arrow-up"></span></a>
         </span>

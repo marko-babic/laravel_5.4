@@ -29,32 +29,20 @@ class FileController extends Controller
 
     public function store(FileUpload $request)
     {
-        if ($request->hasFile('screenshot')) {
-            if ($request->file('screenshot')->isValid()) {
-                $file = request()->file('screenshot');
-                $file_name = str_random(40) . '.' . $file->extension();
-                $file->storeAs('public/screenshots/', $file_name);
-                $thumbnail_path = storage_path() . '/app/public/screenshots_thumbnail/' . $file_name;
-                $original_path = storage_path() . '/app/public/screenshots/' . $file_name;
+        if(!$request->file('screenshot')->isValid())
+            return back();
 
-                Screenshot::create([
-                   'description' => request('description'),
-                    'path' => $file_name,
-                    'account_id' => Auth::id(),
-                    'votes' => 0,
-                    'approved' => $this->state['default'],
-                ]);
+        $file_name = $this->saveUploadedScreenshot($request->file('screenshot'));
 
-                Misc::createThumbnail($original_path, $thumbnail_path, config('custom.thumbnail_x'), config('custom.thumbnail_y'));
+        Screenshot::create([
+           'description' => $request->input('description'),
+            'path' => $file_name,
+            'account_id' => Auth::id(),
+            'votes' => 0,
+            'approved' => $this->state['default'],
+        ]);
 
-                session()->flash('screenshot', 'Screenshot was successfully uploaded. Waiting for approval.');
-
-                /* in case apache doesn't set them properly */
-                chmod($original_path, 0644);
-                chmod($thumbnail_path, 0644);
-            }
-        }
-
+        session()->flash('screenshot', 'Screenshot was successfully uploaded. Waiting for approval.');
         return back();
     }
 
@@ -67,14 +55,28 @@ class FileController extends Controller
         $screenshot->update(['approved' => $this->state['approved']]);
     }
 
-
     /*
      * Set screenshot as denied, not actually delete it. File and thumbnail remain on the server.
      */
 
     public function destroy(Screenshot $screenshot)
     {
-
         $screenshot->update(['approved' => $this->state['denied']]);
+    }
+
+    public static function saveUploadedScreenshot($file)
+    {
+        $file_name = str_random(40) . '.' . $file->extension();
+        $file->storeAs('public/screenshots/', $file_name);
+        $thumbnail_path = storage_path() . '/app/public/screenshots_thumbnail/' . $file_name;
+        $original_path = storage_path() . '/app/public/screenshots/' . $file_name;
+
+        Misc::createThumbnail($original_path, $thumbnail_path, config('custom.thumbnail_x'), config('custom.thumbnail_y'));
+
+        /* in case apache doesn't set them properly */
+        chmod($original_path, 0644);
+        chmod($thumbnail_path, 0644);
+
+        return $file_name;
     }
 }

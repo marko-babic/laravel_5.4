@@ -4,7 +4,7 @@
         login: "{{route('login')}}"
     };
 
-            @if(Auth::guest())
+    @if(Auth::guest())
     var isLogged = false;
             @else
     var isLogged = true;

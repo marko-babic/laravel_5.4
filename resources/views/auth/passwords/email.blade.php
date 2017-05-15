@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('body')
-    <div class="row" style="padding: 120px;">
+    <div class="row auth">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}

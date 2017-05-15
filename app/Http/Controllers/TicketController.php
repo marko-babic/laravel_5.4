@@ -3,6 +3,7 @@
 namespace L2\Http\Controllers;
 
 use Auth;
+use L2\Http\Requests\TicketReply as TicketReplyRequest;
 use L2\Http\Requests\TicketStore;
 use L2\Ticket;
 use L2\TicketReply;
@@ -19,42 +20,41 @@ class TicketController extends Controller
 
     public function index()
     {
-        return view('tickets.admin.index')->with('tickets', Ticket::alltickets());
+        return view('tickets.admin.index')->with('tickets', Ticket::getAllTickets());
     }
 
     public function store(TicketStore $request)
     {
         Ticket::create([
-            'display_id' => strtoupper(str_random(4)) . '-' . strtoupper(str_random(4)) . '-' . strtoupper(str_random(4)),
-            'topic_id' => request('option'),
-            'content' => request('content'),
+            'display_id' => $this->getRandomId(),
+            'topic_id' => $request->input('option'),
+            'content' => $request->input('content'),
             'account_id' => Auth::id(),
             'status_id' => 1
         ]);
 
         session()->flash('ticket_message', 'Ticket was successfully submitted.');
-        return redirect('/home#submitticket');
+        return redirect()->route('home');
     }
 
-    public function edit(Ticket $ticket)
+    public function edit(Ticket $ticket,TicketReplyRequest $request)
     {
+        $ticket_with_replies = Ticket::admin_info($ticket->id);
+
         if(Auth::user()->isAdmin()) {
-            return view('tickets.admin.edit')->with(
-                [
-                    'info' => Ticket::admin_info($ticket->id),
-                    'status' => TicketStatus::all()
-                ]);
-        } else {
-            if($ticket->account_id == Auth::id()) {
-                return view('tickets.user.replies')->with(
-                    [
-                        'ticket' => Ticket::admin_info($ticket->id),
-                        'cansubmit' => TicketReply::cansubmitreply($ticket->id),
-                    ]);
-            }
+            $data = [
+                'info' => $ticket_with_replies,
+                'status' => TicketStatus::all()
+            ];
+            return view('tickets.admin.edit')->with($data);
         }
 
-        return redirect('/home');
+        $data = [
+            'ticket' => $ticket_with_replies,
+            'cansubmit' => TicketReply::isAllowedToReply($ticket->id),
+        ];
+
+        return view('tickets.user.replies')->with($data);
     }
 
     public function destroy(Ticket $ticket)
@@ -70,40 +70,25 @@ class TicketController extends Controller
      * @return redirect
      */
 
-    public function reply(Ticket $ticket)
+    public function reply(Ticket $ticket, TicketReplyRequest $request)
     {
-        if (!$user_id = $this->checkOwner($ticket->id)) {
-            return redirect('/home');
-        }
-
         TicketReply::create([
             'ticket_id' => $ticket->id,
-            'content' => request('content'),
+            'content' => $request->input('content'),
             'account_id' => Auth::id()
         ]);
 
         if(Auth::user()->isAdmin()) {
-            Ticket::whereId($ticket->id)->update(['status_id' => request('status')]);
-            //Auth::user()->notifyUserTicket($user_id, $ticket->id);
+            $ticket->update(['status_id' => request('status')]);
             return redirect()->route('ticket.index');
         }
 
-        //Auth::user()->notifyAdmin('ticket_reply');
         session()->flash('ticket_message', 'Ticket was successfully replied.');
         return redirect()->route('home');
     }
 
-    /*
-     * verify if submitting user owns the ticket, or if admin is replying. Either way, they're both allowed to process.
-     */
-
-    public function checkOwner($id)
+    public function getRandomId()
     {
-        if ($ticket = Ticket::whereId($id)->first()) {
-            if ($ticket->account_id == Auth::id() || Auth::user()->isAdmin())
-                return $ticket->account_id;
-        }
-
-        return false;
+        return strtoupper(str_random(4)) . '-' . strtoupper(str_random(4)) . '-' . strtoupper(str_random(4));
     }
 }

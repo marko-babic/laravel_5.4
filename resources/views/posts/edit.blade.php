@@ -1,22 +1,22 @@
 @extends('nav.admin')
 
 @section('admin_main')
-    <div style="padding: 40px;">
+    <div class="padded">
         <form action="{{route('posts.update',['id' => $post->id])}}" method="post">
             {{ method_field('put') }}
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" name="title" value="{{$post->title}}" required>
+                <input type="text" class="form-control" name="title" id="title" value="{{$post->title}}" required>
             </div>
             <div class="form-group">
                 <label for="description">Site to be displayed on</label>
                 <select class="form-control" name="description" id="description">
-                    @foreach($sites as $st)
-                        @if($post->description_id == $st->id)
-                            <option selected="selected" value="{{$st->id}}"> {{$st->description}} </option>
+                    @foreach($sites as $subSite)
+                        @if($post->description_id == $subSite->id)
+                            <option selected="selected" value="{{$subSite->id}}"> {{$subSite->description}} </option>
                         @else
-                            <option value="{{$st->id}}"> {{$st->description}} </option>
+                            <option value="{{$subSite->id}}"> {{$subSite->description}} </option>
                         @endif
                     @endforeach
                 </select>

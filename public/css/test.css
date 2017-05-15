@@ -259,6 +259,10 @@ hr {
 
 /****** SIDEBAR ******/
 
+.sidebar-wrap {
+    padding-top: 15px;
+}
+
 .sidebar-links {
     margin: 60px 0 60px 0;
 }
@@ -279,6 +283,10 @@ hr {
 
     .tickets a:hover {
         background-color: red;
+    }
+
+    .tickets tr {
+        text-align: center;
     }
 
 .stats-bg {
@@ -345,12 +353,6 @@ hr {
 }
 
 
-
-
-
-
-
-
 .ticket-header {
     line-height: 300%;
 }
@@ -362,12 +364,18 @@ hr {
 
 .ticket-question, .ticket-text {
     margin-top: 20px;
+    /*white-space:pre-wrap;*/
+}
+
+.ticket-edit {
+    padding: 20px 0 20px 0;
 }
 
 
-
 /******* MAIN ******/
-
+.main-wrap {
+    padding: 20px 10px 20px 10px;
+}
 
 .news {
     background: rgba(29, 58, 64, 0.3);
@@ -473,4 +481,21 @@ ul a:hover,
 .nav-edit {
     font-size: 10px;
     cursor: pointer;
+}
+
+.home-wrap > .row {
+    margin-left: 5px;
+}
+
+.img-thumbnail {
+    width: 100%;
+    margin: 30px 0 70px 0;
+}
+
+.padded {
+    padding: 40px;
+}
+
+.auth {
+    padding: 120px;
 }

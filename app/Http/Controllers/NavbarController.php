@@ -43,9 +43,9 @@ class NavbarController extends Controller
     public function store(Request $request)
     {
         Navbar::create([
-            'description' => request('description'),
-            'shortcode' => request('shortcode'),
-            'navbar' => request('navbar')
+            'description' => $request->input('description'),
+            'shortcode' => $request->input('shortcode'),
+            'navbar' => $request->input('navbar')
         ]);
     }
 
@@ -78,12 +78,12 @@ class NavbarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Navbar $navbar)
+    public function update(Navbar $navbar, Request $request)
     {
         $navbar->update([
-            'description' => request('description'),
-            'shortcode' => request('shortcode'),
-            'navbar' => request('navbar'),
+            'description' => $request->input('description'),
+            'shortcode' => $request->input('shortcode'),
+            'navbar' => $request->input('navbar'),
         ]);
     }
 

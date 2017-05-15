@@ -14,5 +14,5 @@
 @endsection
 
 @section('content')
-    <img class="img-thumbnail" src="{{asset('/css/slika.jpg')}}" style="width: 100%; margin: 30px 0 70px 0;">
+    <img class="img-thumbnail" src="{{asset('/css/slika.jpg')}}">
 @endsection

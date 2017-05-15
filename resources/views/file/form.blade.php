@@ -20,4 +20,4 @@
     <div class="text-center">
         Loading
     </div>
-    </div>
+</div>

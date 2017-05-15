@@ -2,16 +2,13 @@
 
 @section('admin_main')
     <div class="news">
-        @if(count($unread_notifications))
+        @if(count($unreadNotifications))
             <div class="element title-adm"> notifications </div>
             <div class="content">
                 <ul>
-                    @foreach($unread_notifications as $notification)
+                    @foreach($unreadNotifications as $notification)
                         <li data-notification="{{$notification->id}}">
-                            @php
-                                $view = 'notifications.'.last(explode('\\',$notification["type"]));
-                            @endphp
-                            @include($view)
+                            @include($notification["view"])
                             <span class="glyphicon glyphicon-ok note-read" title="Mark as read"></span>
                         </li>
                     @endforeach
@@ -22,7 +19,7 @@
         <div class="row" style="padding: 20px;">
             <div class="col-md-4">
             <ul>
-                @foreach($a_nav as $nav)
+                @foreach($navigation as $nav)
                     <li data-nav="{{$nav->id}}" data-nav_short="{{$nav->shortcode}}" data-nav_nav="{{$nav->navbar}}"> {{$nav->description}}
                         <span data-action="edit" class="nav-edit glyphicon glyphicon-pencil" title="Edit element"></span>
                         <span data-action="remove" class="nav-edit glyphicon glyphicon-remove" title="Remove element"></span>

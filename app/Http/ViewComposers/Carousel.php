@@ -9,16 +9,16 @@ use L2\Vote;
 
 class Carousel
 {
-    protected $carouselList = [];
-    protected $votes = false;
+    private $carouselList;
+    private $votes;
 
     public function __construct()
     {
         $this->carouselList = Screenshot::screens()->where('approved', 1);
 
-        if (Auth::check())
-            $this->votes = Vote::votesleft();
-
+        if (Auth::check()) {
+            $this->votes = Vote::votesLeft();
+        }
     }
 
     public function compose(View $view)

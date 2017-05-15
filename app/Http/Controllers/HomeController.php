@@ -10,7 +10,7 @@ use L2\Topic;
 
 class HomeController extends Controller
 {
-    public $nav = 'home';
+    private $navigation = 'home';
 
     public function __construct()
     {
@@ -19,25 +19,37 @@ class HomeController extends Controller
 
     public function index()
     {
-        if(Auth::user()->isAdmin()){
-            return view('admin.admin-main')->with(
-                [
-                    'unread_notifications' => Auth::User()->unreadNotifications,
-                    'nav_active' => $this->nav,
-                    'a_nav' => Navbar::all(),
-                ]);
-        } else {
-            $info["ticket"] = Ticket::ticket_info();
-            $info["screenshot"] = Screenshot::canupload();
-            $info["cansubmit"] = Ticket::cansubmit();
-            $info["notifications"] = Auth::User()->notifications()->paginate(10);
-            $info["ticket_topic"] = Topic::all();
+        if(Auth::user()->isAdmin()) {
 
+            $adminData = [
+                'unreadNotifications' => $this->generateViews(Auth::User()->unreadNotifications),
+                'navActive' => $this->navigation,
+                'navigation' => Navbar::all(),
+            ];
 
-            if(!$info["screenshot"])
-                $info["screenshot_time"] = Screenshot::where('account_id', Auth::id())->orderBy('created_at', 'desc')->first();
-
-            return view('home')->with(['info' => $info,'nav_active' => $this->nav]);
+            return view('admin.admin-main')->with($adminData);
         }
+
+        $userData = [
+            'tickets' => Ticket::getAllUserTickets(),
+            'screenshotCanUpload' => Screenshot::canupload(),
+            'lasUpload' => Screenshot::where('account_id', Auth::id())->orderBy('created_at', 'desc')->first(),
+            'ticketCanSubmit' => Ticket::cansubmit(),
+            'notifications' => $this->generateViews(Auth::User()->notifications()->paginate(10)),
+            'ticketTopic' => Topic::all(),
+            'navActive' => $this->navigation,
+            ];
+
+        return view('home')->with($userData);
+    }
+
+    public function generateViews($notifications)
+    {
+        foreach($notifications as &$notification)
+        {
+            $notification["view"] = 'notifications.'.last(explode('\\',$notification["type"]));
+        }
+
+        return $notifications;
     }
 }

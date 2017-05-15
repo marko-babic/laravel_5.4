@@ -1,12 +1,12 @@
-@if($info["cansubmit"])
+@if($ticketCanSubmit)
     <form action="{{route('ticket.store')}}" method="post">
         {{ csrf_field() }}
          <div class="form-group">
             <label for="option">Reason</label>
              <div class="form-group">
                  <select class="form-control" name="option" id="option">
-                     @foreach($info["ticket_topic"] as $st)
-                             <option value="{{$st->id}}"> {{$st->text}} </option>
+                     @foreach($ticketTopic as $topic)
+                             <option value="{{$topic->id}}"> {{$topic->text}} </option>
                      @endforeach
                  </select>
              </div>

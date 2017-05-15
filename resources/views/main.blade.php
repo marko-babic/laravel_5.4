@@ -24,22 +24,21 @@
         ]) !!};
     </script>
 </head>
-<body style="">
+<body>
+    <div id="app">
+        <div style="margin-top: 450px">
+            <div class="container">
+                @include('layouts.nav')
+            </div>
+            <div class="container">
+                @yield('body')
+            </div>
 
-<div id="app">
-    <div style="margin-top: 450px">
-        <div class="container">
-            @include('layouts.nav')
+            @include('layouts.carousel')
+
+            @include('layouts.footer')
         </div>
-        <div class="container">
-            @yield('body')
-        </div>
-
-        @include('layouts.carousel')
-
-        @include('layouts.footer')
     </div>
-</div>
 <br><br><br><br>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>

@@ -1,26 +1,23 @@
 <div class="row">
     <ul class="navbar">
-    @foreach($navbar as $nav)
-        @if(isset($nav_active) && $nav->shortcode == $nav_active)
-            <li class="active">
-        @else
-            <li>
-        @endif
-            <a href="{{route('nav', ['nav' => $nav->shortcode])}}">{{$nav->navbar}}</a>
-            @if($nav->shortcode == 'home')
-                    @if(Auth::check())
-                        @php
-                            $new_count = count(Auth::User()->unreadNotifications);
-                        @endphp
-                        @if($new_count > 0)
-                            <span class="badge" title="{{$new_count}} new notifications">
-                            {{$new_count}}
-                        </span>
-                        @endif
-                    @endif
+        @foreach($navigationBar as $navBar)
+            @if(isset($navActive) && $navBar->shortcode == $navActive)
+                <li class="active">
+            @else
+                <li>
             @endif
-        </li>
-    @endforeach
+
+            <a href="{{route('nav', ['nav' => $navBar->shortcode])}}">{{$navBar->navbar}}</a>
+            @if($navBar->shortcode === 'home' && Auth::check())
+                @php
+                    $newNotifications = count(Auth::User()->unreadNotifications);
+                @endphp
+                @if($newNotifications > 0)
+                <span class="badge" title="{{$newNotifications}} new notifications"> {{$newNotifications}} </span>
+                @endif
+            @endif
+            </li>
+        @endforeach
         @if(Auth::check())
             <li class="pull-right">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> LOGOUT  </a>

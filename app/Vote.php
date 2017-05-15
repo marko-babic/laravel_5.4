@@ -14,30 +14,10 @@ class Vote extends Model
     ];
 
     /*
-     * check whether user is allowed to vote for screenshot.
-     *
-     * @return boolean
-     */
-
-    public static function canvote($id)
-    {
-        if (Screenshot::find($id)->exists()) { // check for approved only
-            $vote = Vote::where('screenshot_id', $id)->where('account_id', Auth::id())->exists();
-            if (!$vote) {
-                $votes = Vote::TimeLimit()->get();
-
-                if (count($votes) < config('custom.vote_limit'))
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    /*
      * @return int number of votes left
      */
 
-    public static function votesleft()
+    public static function votesLeft()
     {
         $votes = Vote::TimeLimit()->get();
         $votes["left"] = config('custom.vote_limit') - count($votes);
@@ -51,6 +31,11 @@ class Vote extends Model
 
     public function scopeTimeLimit($query)
     {
-        return $query->where('created_at', '>=', Carbon::now()->subHours(config('custom.vote_hour_limit')))->where('account_id', Auth::id());
+        return $query->where(
+            [
+                ['created_at', '>=', Carbon::now()->subHours(config('custom.vote_hour_limit'))],
+                ['account_id', '=', Auth::id()],
+            ]
+        );
     }
 }

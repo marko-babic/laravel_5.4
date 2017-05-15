@@ -28,12 +28,7 @@ class Screenshot extends Model
     {
         $last_upload = self::where('account_id', Auth::id())->orderBy('created_at', 'desc')->first();
 
-        if($last_upload) {
-            if (!Misc::checkTime($last_upload->created_at, config('custom.screenshot_limit')))
-                return false;
-        }
-
-        return true;
+        return $last_upload ? Misc::checkTime($last_upload->created_at, config('custom.screenshot_limit')) : true;
     }
 
     public static function screens()

@@ -2,13 +2,13 @@
 
 @section('body')
         <div class="row">
-            <div class="col-md-7" style="padding: 20px 10px 20px 10px;">
+            <div class="col-md-7 main-wrap">
                 <!-- to be changed soon -->
                 @yield('content')
 
                 @yield('content_main')
             </div>
-            <div class="col-md-5" style="padding-top: 15px;">
+            <div class="col-md-5 sidebar-wrap">
                 @include('nav.sidebar')
             </div>
         </div>
