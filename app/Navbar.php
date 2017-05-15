@@ -13,9 +13,4 @@ class Navbar extends Model
     ];
 
     protected $table = 'navbar';
-
-    public function getRouteKeyName()
-    {
-        return 'shortcode';
-    }
 }

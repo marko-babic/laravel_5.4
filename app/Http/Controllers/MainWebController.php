@@ -17,8 +17,10 @@ class MainWebController extends Controller
         return view('posts.index')->with($data);
     }
 
-    public function generate(Navbar $nav)
+    public function generate($nav)
     {
+        $nav = Navbar::where('shortcode',$nav)->first();
+
         $data = [
             'post' => Post::where('description_id', $nav->id)->orderBy('created_at','desc')->first(),
             'navActive' => $nav->shortcode,
