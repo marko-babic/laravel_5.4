@@ -15,6 +15,6 @@ class TicketNotifyAdmin
 
     public function handle(NewTicket $event)
     {
-        User::where('access_level', '>', 0)->first()->notify(new TicketSubmitted($event->ticket));
+        User::getAdmin()->notify(new TicketSubmitted($event->ticket));
     }
 }

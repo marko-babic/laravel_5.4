@@ -2,25 +2,17 @@
 
 namespace L2\Events;
 
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
+use L2\Events\Notifications\AdminNotification;
 use L2\Ticket;
 
-class NewTicket
+class NewTicket extends  EventBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $ticket;
 
     public function __construct(Ticket $ticket)
     {
         $this->ticket = $ticket;
-    }
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        parent::__construct(new AdminNotification());
     }
 }

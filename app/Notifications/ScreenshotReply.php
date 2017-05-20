@@ -10,12 +10,10 @@ class ScreenshotReply extends Notification
 {
     use Queueable;
 
-    protected $status;
     protected $screenshot;
 
-    public function __construct($status, Screenshot $screenshot)
+    public function __construct(Screenshot $screenshot)
     {
-        $this->status = $status;
         $this->screenshot = $screenshot;
     }
 
@@ -27,7 +25,7 @@ class ScreenshotReply extends Notification
     public function toArray($notifiable)
     {
         return [
-            "ss_status" => $this->status,
+            "ss_status" => $this->screenshot->approved,
             "ss_description" => $this->screenshot->description,
         ];
     }

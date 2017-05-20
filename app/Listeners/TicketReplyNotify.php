@@ -23,7 +23,7 @@ class TicketReplyNotify
 
             User::whereId($ticket->account_id)->first()->notify(new UserTicketReply($event->reply->ticket_id));
         } else {
-            User::where('access_level', '>', 0)->first()->notify(new TicketReply($event->reply));
+            User::getAdmin()->notify(new TicketReply($event->reply));
         }
     }
 }

@@ -15,6 +15,6 @@ class notifyAdmin
 
     public function handle(NewScreenshot $event)
     {
-        User::where('access_level', '>', 0)->first()->notify(new ScreenshotSubmitted($event->screenshot));
+        User::getAdmin()->notify(new ScreenshotSubmitted($event->screenshot));
     }
 }

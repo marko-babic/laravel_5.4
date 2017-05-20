@@ -30,6 +30,11 @@ class User extends Authenticatable
         return $this->access_level;
     }
 
+    public static function getAdmin()
+    {
+        return static::where('access_level','>',0)->first();
+    }
+
     public function desc()
     {
         return $this->with('web')->whereId($this->id)->first();

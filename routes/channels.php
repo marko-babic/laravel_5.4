@@ -11,6 +11,12 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('notify-admin', function ($user) {
+    return $user->isAdmin();
 });
+
+Broadcast::channel('notify-user.{id}', function ($user, $userId) {
+    return $user->id == $userId;
+});
+
+

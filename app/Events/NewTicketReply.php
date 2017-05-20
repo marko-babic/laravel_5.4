@@ -2,25 +2,24 @@
 
 namespace L2\Events;
 
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
+use Auth;
+use L2\Events\Notifications\AdminNotification;
+use L2\Events\Notifications\UserNotification;
+use L2\Ticket;
 use L2\TicketReply;
 
-class NewTicketReply
+class NewTicketReply extends EventBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $reply;
 
     public function __construct(TicketReply $reply)
     {
         $this->reply = $reply;
-    }
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        if(Auth::User()->isAdmin()) {
+            parent::__construct(new UserNotification(Ticket::whereId($reply->ticket_id)->first()->account_id));
+        } else {
+            parent::__construct(new AdminNotification());
+        }
     }
 }

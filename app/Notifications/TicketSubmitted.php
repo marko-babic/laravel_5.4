@@ -2,6 +2,7 @@
 
 namespace L2\Notifications;
 
+use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use L2\Ticket;
@@ -25,7 +26,7 @@ class TicketSubmitted extends Notification
     public function toArray($notifiable)
     {
         return [
-            'login' => \Auth::User()->login,
+            'login' => Auth::User()->login,
             'url' => route('ticket.edit',['id' => $this->ticket->id]),
         ];
     }

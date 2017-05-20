@@ -17,6 +17,6 @@ class ScreenshotNotifyUser
     {
         $user = User::whereId($event->screenshot->account_id)->first();
 
-        $user->notify(new ScreenshotReply($event->screenshot->approved, $event->screenshot));
+        $user->notify(new ScreenshotReply($event->screenshot));
     }
 }

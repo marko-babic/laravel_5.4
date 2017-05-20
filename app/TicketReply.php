@@ -13,7 +13,7 @@ class TicketReply extends Model
     ];
 
     protected $events = [
-        'created' => NewTicketReply::class,
+        'created' => NewTicketReply::class
     ];
 
     /*

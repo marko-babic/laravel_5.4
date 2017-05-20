@@ -10,11 +10,16 @@
             <a href="{{route('nav', ['nav' => $navBar->shortcode])}}">{{$navBar->navbar}}</a>
             @if($navBar->shortcode === 'home' && Auth::check())
                 @php
+                    $span = '<span id="badge"';
                     $newNotifications = count(Auth::User()->unreadNotifications);
+
+                    if($newNotifications > 0) {
+                       $span .= ' class="badge" title="New notifications"> '. $newNotifications . '</span>';
+                    } else {
+                        $span .= '> </span>';
+                    }
+                    echo $span;
                 @endphp
-                @if($newNotifications > 0)
-                <span class="badge" title="{{$newNotifications}} new notifications"> {{$newNotifications}} </span>
-                @endif
             @endif
             </li>
         @endforeach

@@ -30,6 +30,3 @@ Route::group(['prefix' => 'home'], function() {
 
 Route::get('{nav}', ['uses' => 'MainWebController@generate'])->name('nav');
 
-
-
-

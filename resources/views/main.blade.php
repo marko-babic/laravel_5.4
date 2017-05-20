@@ -26,7 +26,7 @@
 </head>
 <body>
     <div id="app">
-        <div style="margin-top: 450px">
+        <div style="margin: 450px 0 100px 0">
             <div class="container">
                 @include('layouts.nav')
             </div>
@@ -39,7 +39,6 @@
             @include('layouts.footer')
         </div>
     </div>
-<br><br><br><br>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
@@ -60,5 +59,31 @@
         });
     });
 </script>
+
+    <script>
+        @if(Auth::check())
+            @if(Auth::user()->isAdmin())
+                Echo.private('notify-admin')
+                    .listen('.L2.Events.NewScreenshot', (e) => updateNotifications(e))
+            .listen('.L2.Events.NewTicket', (e) => updateNotifications(e))
+            .listen('.L2.Events.NewTicketReply', (e) => updateNotifications(e));
+        @else
+            Echo.private('notify-user.{{Auth::id()}}')
+                .listen('.L2.Events.CheckedScreenshot', (e) => updateNotifications(e))
+                .listen('.L2.Events.NewTicketReply', (e) => updateNotifications(e));
+        @endif
+
+         function updateNotifications(data) {
+             let badge = $('#badge');
+             let test = parseInt(badge.html());
+
+             if(isNaN(test)) {
+             badge.addClass('badge');
+             }
+             badge.html(data.number);
+         }
+        @endif
+    </script>
+
 </body>
 </html>

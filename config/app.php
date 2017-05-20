@@ -174,7 +174,7 @@ return [
          */
         L2\Providers\AppServiceProvider::class,
         L2\Providers\AuthServiceProvider::class,
-        // L2\Providers\BroadcastServiceProvider::class,
+        L2\Providers\BroadcastServiceProvider::class,
         L2\Providers\EventServiceProvider::class,
         L2\Providers\RouteServiceProvider::class,
         L2\Providers\CarouselProvider::class,
