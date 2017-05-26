@@ -1,4 +1,4 @@
-@if(count($tickets))
+@if(count($tickets) > 0)
     <table class="table tickets" width="100%">
         <thead>
             <tr>

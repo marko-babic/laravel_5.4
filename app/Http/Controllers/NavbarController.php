@@ -3,98 +3,63 @@
 namespace L2\Http\Controllers;
 
 use Auth;
-use Illuminate\Http\Request;
-use L2\Navbar;
+use Illuminate\Database\QueryException;
+use L2\Http\Requests\NavbarCheck;
+use L2\Http\Requests\NavbarUpdateCheck;
+use L2\Repositories\NavbarRepository as Navbar;
 
 class NavbarController extends Controller
 {
 
-    public function __construct()
+    private $navbar;
+
+    public function __construct(Navbar $navbar)
     {
         $this->middleware(['auth','admin']);
+        $this->navbar = $navbar;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function store(NavbarCheck $request)
     {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        Navbar::create([
+        $this->navbar->create([
             'description' => $request->input('description'),
             'shortcode' => $request->input('shortcode'),
             'navbar' => $request->input('navbar')
         ]);
+
+        return response('Navigation bar was successfully created.', 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
+    public function update($id, NavbarUpdateCheck $request)
     {
+        $navbar = $this->navbar->getById($id);
 
+        try {
+            $navbar->update([
+                'description' => $request->input('description'),
+                'shortcode' => $request->input('shortcode'),
+                'navbar' => $request->input('navbar'),
+            ]);
+        } catch (QueryException $e)
+        {
+            return response($e->getMessage(),422);
+        }
+
+        return response('Navigation bar was successfully updated.', 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroy($id)
     {
-        //
-    }
+        $navbar = $this->navbar->getById($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Navbar $navbar, Request $request)
-    {
-        $navbar->update([
-            'description' => $request->input('description'),
-            'shortcode' => $request->input('shortcode'),
-            'navbar' => $request->input('navbar'),
-        ]);
-    }
+        try {
+            $navbar->delete();
+        }
+        catch (QueryException $e)
+        {
+            return response($e->getMessage(),422);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Navbar $navbar)
-    {
-        $navbar->delete();
+        return response('Navigation bar was successfully deleted', 200);
     }
 }

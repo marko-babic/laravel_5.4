@@ -14,7 +14,7 @@ class Admin {
             return $next($request);
         }
 
-        return redirect('home');
+        return redirect()->route('home');
     }
 
 }

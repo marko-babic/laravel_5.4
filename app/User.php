@@ -34,15 +34,15 @@ class User extends Authenticatable
     {
         return static::where('access_level','>',0)->first();
     }
-
+/*
     public function desc()
     {
-        return $this->with('web')->whereId($this->id)->first();
+        return $this->with('web')->find($this->id);
     }
-
+*/
     public function tickets()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class,'account_id');
     }
 
     public function web()

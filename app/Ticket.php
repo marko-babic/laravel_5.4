@@ -60,18 +60,6 @@ class Ticket extends Model
     }
 
     /*
-     * Gets all user info for admin page
-     *
-     * @return array $tickets all ticket info
-     */
-
-
-    public static function admin_info($id)
-    {
-        return static::whereId($id)->with(['user', 'topic', 'replies', 'status'])->first();
-    }
-
-    /*
      * return all tickets in the database, for admin only
      *
      * @return array Ticket

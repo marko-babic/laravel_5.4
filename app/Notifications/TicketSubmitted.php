@@ -27,7 +27,7 @@ class TicketSubmitted extends Notification
     {
         return [
             'login' => Auth::User()->login,
-            'url' => route('ticket.edit',['id' => $this->ticket->id]),
+            'url' => route('tickets.edit',['id' => $this->ticket->id]),
         ];
     }
 }

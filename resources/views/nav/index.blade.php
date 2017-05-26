@@ -5,7 +5,6 @@
             <div class="col-md-7 main-wrap">
                 <!-- to be changed soon -->
                 @yield('content')
-
                 @yield('content_main')
             </div>
             <div class="col-md-5 sidebar-wrap">

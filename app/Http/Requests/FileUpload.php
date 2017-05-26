@@ -3,23 +3,23 @@
 namespace L2\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use L2\Screenshot;
+use L2\Repositories\ScreenshotRepository as Screenshot;
 
 class FileUpload extends FormRequest
 {
-
-    /*
-     * @return boolean
-     */
-    public function authorize()
+    public function authorize(Screenshot $screenshot)
     {
-        return Screenshot::canupload();
+        return $screenshot->canUpload();
     }
 
     public function rules()
     {
         return [
-                'screenshot' => 'required | image | max: '.config('custom.screenshot_size'),
+                'screenshot' => [
+                    'required' ,
+                    'image' ,
+                    'max: '.config('custom.screenshot_size')
+                ],
                 'description' => 'required'
         ];
     }

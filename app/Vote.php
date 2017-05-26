@@ -19,7 +19,7 @@ class Vote extends Model
 
     public static function votesLeft()
     {
-        $votes = Vote::TimeLimit()->get();
+        $votes = static::TimeLimit()->get();
         $votes["left"] = config('custom.vote_limit') - count($votes);
 
         if ($votes["left"] === 0) {
@@ -37,5 +37,10 @@ class Vote extends Model
                 ['account_id', '=', Auth::id()],
             ]
         );
+    }
+
+    public function screen()
+    {
+        return $this->belongsTo(Screenshot::class, 'screenshot_id');
     }
 }

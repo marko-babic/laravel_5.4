@@ -3,29 +3,39 @@
 namespace L2\Http\Controllers;
 
 use Auth;
+use Illuminate\Database\QueryException;
 use L2\Http\Requests\TicketReply as TicketReplyRequest;
 use L2\Http\Requests\TicketStore;
-use L2\Ticket;
-use L2\TicketReply;
-use L2\TicketStatus;
+use L2\Repositories\TicketReplyRepository as TicketReply;
+use L2\Repositories\TicketRepository as Ticket;
+use L2\Repositories\TicketStatusRepository as TicketStatus;
 
 
 class TicketController extends Controller
 {
-    public function __construct()
+    private $ticket;
+    private $ticketStatus;
+    private $ticketReply;
+
+    public function __construct(Ticket $ticket, TicketStatus $ticketStatus, TicketReply $ticketReply)
     {
+        $this->ticket = $ticket;
+        $this->ticketStatus = $ticketStatus;
+        $this->ticketReply = $ticketReply;
         $this->middleware('auth');
         $this->middleware('admin', ['only' => ['index','destroy']]);
     }
 
     public function index()
     {
-        return view('tickets.admin.index')->with('tickets', Ticket::getAllTickets());
+        $tickets = $this->ticket->getAllWithRelationship();
+
+        return view('admin.slugs.tickets.tickets')->with('tickets', $tickets);
     }
 
     public function store(TicketStore $request)
     {
-        Ticket::create([
+        $this->ticket->create([
             'display_id' => $this->getRandomId(),
             'topic_id' => $request->input('option'),
             'content' => $request->input('content'),
@@ -37,29 +47,38 @@ class TicketController extends Controller
         return redirect()->route('home');
     }
 
-    public function edit(Ticket $ticket,TicketReplyRequest $request)
+    public function edit($id, TicketReplyRequest $request)
     {
-        $ticket_with_replies = Ticket::admin_info($ticket->id);
+        $ticketWithReplies = $this->ticket->getById($id);
 
         if(Auth::user()->isAdmin()) {
             $data = [
-                'info' => $ticket_with_replies,
-                'status' => TicketStatus::all()
+                'info' => $ticketWithReplies,
+                'status' => $this->ticketStatus->getAll()
             ];
-            return view('tickets.admin.edit')->with($data);
+
+            return view('admin.slugs.tickets.tickets-edit')->with($data);
         }
 
         $data = [
-            'ticket' => $ticket_with_replies,
-            'cansubmit' => TicketReply::isAllowedToReply($ticket->id),
+            'ticket' => $ticketWithReplies,
+            'cansubmit' => $this->ticketReply->canReply($id),
         ];
 
-        return view('tickets.user.replies')->with($data);
+        return view('user.tickets.replies')->with($data);
     }
 
     public function destroy(Ticket $ticket)
     {
-        $ticket->delete();
+        try {
+            $ticket->delete();
+        }
+        catch (QueryException $e)
+        {
+            return response($e->getMessage(),422);
+        }
+
+        return response('Ticket was successfully deleted', 200);
     }
 
     /*
@@ -70,9 +89,11 @@ class TicketController extends Controller
      * @return redirect
      */
 
-    public function reply(Ticket $ticket, TicketReplyRequest $request)
+    public function reply($ticket, TicketReplyRequest $request)
     {
-        TicketReply::create([
+        $ticket = $this->ticket->getById($ticket);
+
+        $this->ticketReply->create([
             'ticket_id' => $ticket->id,
             'content' => $request->input('content'),
             'account_id' => Auth::id()

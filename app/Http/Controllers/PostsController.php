@@ -3,60 +3,66 @@
 namespace L2\Http\Controllers;
 
 use Auth;
+use Illuminate\Database\QueryException;
 use L2\Http\Requests\PostVerify;
-use L2\Navbar;
-use L2\Post;
+use L2\Repositories\NavbarRepository as Navbar;
+use L2\Repositories\PostRepository as Post;
 
 class PostsController extends Controller
 {
-
     private $sites;
+    private $post;
 
-    function __construct()
+    function __construct(Post $post, Navbar $navigationBar)
     {
-        $this->middleware(['auth','admin'],['except' => ['index']]);
-        $this->sites = Navbar::all();
+        $this->middleware('admin');
+        $this->sites = $navigationBar;
+        $this->post = $post;
     }
-
+/*
     public function index()
     {
-        return Post::all();
+        return $this->post->getAll();
     }
-
+*/
     public function create()
     {
-        return view('posts.create')->with(['sites' => $this->sites]);
+        return view('admin.slugs.CMS.posts.create')->with(['sites' => $this->sites->getAll()]);
     }
 
     public function store(PostVerify $request)
     {
-        Post::create([
+        $this->post->create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'author' => Auth::id(),
             'description_id' => $request->input('description'),
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('cms');
     }
-
-    public function show(Post $post)
+/*
+    public function show($id)
     {
-        return $post;
+        return $this->post->getById($id);
     }
-
-    public function edit(Post $post)
+*/
+    public function edit($id)
     {
+        $post = $this->post->getById($id);
+
         $data = [
             'post' => $post,
-            'sites' => $this->sites
+            'sites' => $this->sites->getAll()
         ];
 
-        return view('posts.edit')->with($data);
+        return view('admin.slugs.CMS.posts.edit')->with($data);
     }
 
-    public function update(PostVerify $request, Post $post)
+    public function update(PostVerify $request, $id)
     {
+        $post = $this->post->getById($id);
+
         $post->update([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
@@ -67,8 +73,18 @@ class PostsController extends Controller
         return redirect()->route('home');
     }
 
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        $post->delete();
+        $post = $this->post->getById($id);
+
+        try {
+            $post->delete();
+        }
+        catch (QueryException $e)
+        {
+            return response($e->getMessage(),422);
+        }
+
+        return response('Post was successfully deleted', 200);
     }
 }

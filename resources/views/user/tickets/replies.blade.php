@@ -25,6 +25,6 @@
         @endforeach
     <hr>
     @if($cansubmit)
-        @include('tickets.user.reply-form')
+        @include('user.tickets.reply-form')
     @endif
 @endsection

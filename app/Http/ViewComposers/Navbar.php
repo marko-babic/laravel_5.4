@@ -8,7 +8,6 @@ use L2\Navbar as Links;
 class Navbar
 {
     private $navigationBar;
-    private $unreadNotifications;
 
     public function __construct()
     {

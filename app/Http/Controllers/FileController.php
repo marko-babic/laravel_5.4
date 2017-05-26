@@ -4,7 +4,8 @@ namespace L2\Http\Controllers;
 
 use Auth;
 use L2\Http\Requests\FileUpload;
-use L2\Screenshot;
+use L2\Http\Requests\ScreenshotCheck;
+use L2\Repositories\ScreenshotRepository as Screenshot;
 use Misc;
 
 class FileController extends Controller
@@ -16,15 +17,19 @@ class FileController extends Controller
         'denied' => 2,
     ];
 
-    public function __construct()
+    private $screenshot;
+
+    public function __construct(Screenshot $screenshot)
     {
         $this->middleware('auth');
         $this->middleware('admin', ['only' => ['update', 'destroy', 'index']]);
+
+        $this->screenshot = $screenshot;
     }
 
     public function index()
     {
-        return view('file.screens')->with('screenshots', Screenshot::screens()->where('approved', $this->state['default']));
+        return view('admin.slugs.screenshots.screens')->with('screenshots', $this->screenshot->screens($this->state["default"]));
     }
 
     public function store(FileUpload $request)
@@ -34,7 +39,7 @@ class FileController extends Controller
 
         $file_name = $this->saveUploadedScreenshot($request->file('screenshot'));
 
-        Screenshot::create([
+        $this->screenshot->create([
            'description' => $request->input('description'),
             'path' => $file_name,
             'account_id' => Auth::id(),
@@ -50,8 +55,10 @@ class FileController extends Controller
      * Approve screenshot to be displayed in carousel.
      */
 
-    public function update(Screenshot $screenshot)
+    public function update($id, ScreenshotCheck $request)
     {
+        $screenshot = $this->screenshot->getById($id);
+
         $screenshot->update(['approved' => $this->state['approved']]);
     }
 
@@ -59,8 +66,10 @@ class FileController extends Controller
      * Set screenshot as denied, not actually delete it. File and thumbnail remain on the server.
      */
 
-    public function destroy(Screenshot $screenshot)
+    public function destroy($id, ScreenshotCheck $request)
     {
+        $screenshot = $this->screenshot->getById($id);
+
         $screenshot->update(['approved' => $this->state['denied']]);
     }
 

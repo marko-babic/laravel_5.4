@@ -16,7 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet" />
     <link href="{{ asset('css/test.css') }}" rel="stylesheet">
-    @yield('admin_css')
+
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -84,6 +84,5 @@
          }
         @endif
     </script>
-
 </body>
 </html>

@@ -18,6 +18,7 @@ class CreateNavbarTable extends Migration
             $table->string('description');
             $table->string('shortcode');
             $table->string('navbar');
+            $table->unique('shortcode');
         });
     }
 

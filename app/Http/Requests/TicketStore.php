@@ -3,18 +3,13 @@
 namespace L2\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use L2\Ticket;
+use L2\Repositories\TicketRepository as Ticket;
 
 class TicketStore extends FormRequest
 {
-
-    /*
-     * @return boolean
-     */
-
-    public function authorize()
+    public function authorize(Ticket $ticket)
     {
-        return Ticket::cansubmit();
+        return $ticket->canSubmit();
     }
 
     public function rules()

@@ -8,11 +8,15 @@ function checkDelete(id) {
             url: ajax_admin_url.ticket_delete + '/' + id,
             success: function(result) {
                 location.reload();
+            },
+            error: function(xhr) {
+                alert(xhr.responseText);
             }
         });
     }
 }
 
+/*
 function getPosts() {
     var display =  $("#displayposts");
     if(!display.is(':visible')) {
@@ -41,6 +45,8 @@ function getPosts() {
         display.toggle();
     }
 }
+
+*/
 
 function screenshotAction(id, action, text) {
     if (confirm('Really ' + text + ' ?')) {
@@ -98,9 +104,12 @@ function navRemove(id) {
                 'X-CSRF-TOKEN': csrf_token
             },
             url: ajax_admin_url.navbar + '/' + id,
-            success: function(result) {
+            success: function() {
                 location.reload();
-            }
+            },
+            error: function(xhr) {
+                alert(xhr.responseText);
+            },
         });
     }
 }
@@ -137,8 +146,8 @@ $(document).on('ready', function () {
     });
 
     $('.nav-edit').click(function(){
-        var action = $(this).data('action');
-        var id = $(this).parent().data('nav');
+        let action = $(this).data('action');
+        let id = $(this).parent().data('nav');
 
         if(action == 'edit') {
             $('#nav_description').val($(this).parent().text().trim());
@@ -152,11 +161,11 @@ $(document).on('ready', function () {
     });
 
     $('.navbar-add-form').submit(function(event){
-        var desc = $('#nav_description').val();
-        var short = $('#nav_shortcode').val();
-        var nav = $('#nav_navbar').val();
-        var type = 'POST';
-        var url;
+        let desc = $('#nav_description').val();
+        let short = $('#nav_shortcode').val();
+        let nav = $('#nav_navbar').val();
+        let type = 'POST';
+        let url;
 
         if(nav_id > 0) {
             type = 'PUT';
@@ -172,7 +181,10 @@ $(document).on('ready', function () {
                 url: url,
                 data: {description: desc, navbar: nav, shortcode: short},
                 success: function(result) {
-                    location.reload();
+                    location.reload(true);
+                },
+                error: function(xhr) {
+                    alert(xhr.responseText);
                 }
             });
         }

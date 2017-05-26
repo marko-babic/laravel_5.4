@@ -3,44 +3,45 @@
 namespace L2\Http\Controllers;
 
 use Auth;
-use L2\Navbar;
-use L2\Screenshot;
-use L2\Ticket;
-use L2\Topic;
+use L2\Repositories\NavbarRepository as Navbar;
+use L2\Repositories\ScreenshotRepository as Screenshot;
+use L2\Repositories\TicketRepository as Ticket;
+use L2\Repositories\TopicRepository as Topic;
 
 class HomeController extends Controller
 {
     private $navigation = 'home';
+    private $ticket;
+    private $screenshot;
+    private $topic;
+    private $navbar;
 
-    public function __construct()
+    public function __construct(Ticket $ticket, Screenshot $screenshot, Topic $topic, Navbar $navbar)
     {
         $this->middleware('auth');
+        $this->ticket = $ticket;
+        $this->screenshot = $screenshot;
+        $this->topic = $topic;
+        $this->navbar = $navbar;
     }
 
     public function index()
     {
         if(Auth::user()->isAdmin()) {
-
-            $adminData = [
-                'unreadNotifications' => $this->generateViews(Auth::User()->unreadNotifications),
-                'navActive' => $this->navigation,
-                'navigation' => Navbar::all(),
-            ];
-
-            return view('admin.admin-main')->with($adminData);
+            return view('nav.admin');
         }
 
         $userData = [
-            'tickets' => Ticket::getAllUserTickets(),
-            'screenshotCanUpload' => Screenshot::canupload(),
-            'lasUpload' => Screenshot::where('account_id', Auth::id())->orderBy('created_at', 'desc')->first(),
-            'ticketCanSubmit' => Ticket::cansubmit(),
+            'tickets' => $this->ticket->getUserTickets(),
+            'screenshotCanUpload' => $this->screenshot->canUpload(),
+            'lasUpload' => $this->screenshot->lastUpload(Auth::id()),
+            'ticketCanSubmit' => $this->ticket->canSubmit(),
             'notifications' => $this->generateViews(Auth::User()->notifications()->paginate(10)),
-            'ticketTopic' => Topic::all(),
+            'ticketTopic' => $this->topic->getAll(),
             'navActive' => $this->navigation,
             ];
 
-        return view('home')->with($userData);
+        return view('user.user-main')->with($userData);
     }
 
     public function generateViews($notifications)

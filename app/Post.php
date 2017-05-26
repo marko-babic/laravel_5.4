@@ -10,4 +10,9 @@ class Post extends Model
         'title','content','author','description_id'
     ];
 
+    public function navbar()
+    {
+        return $this->hasOne(Navbar::class ,'id','description_id');
+    }
+
 }

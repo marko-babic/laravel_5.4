@@ -27,7 +27,7 @@ class ScreenshotSubmitted extends Notification
     {
         return [
             'login' => Auth::User()->login,
-            'url' => route('screenshot.index'),
+            'url' => route('screenshots.index'),
         ];
     }
 }

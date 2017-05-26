@@ -2,35 +2,27 @@
 
 namespace L2\Http\Requests;
 
-use Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use L2\Repositories\TicketRepository as Ticket;
 
 class TicketReply extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        $ticket = $this->route('ticket');
 
-        if ($ticket->account_id == Auth::id() || Auth::user()->isAdmin()) {
+    public function authorize(Ticket $model)
+    {
+        $ticket = $model->getById($this->ticket);
+
+        if (!is_null($ticket) && ($ticket->account_id === $this->user()->id || $this->user()->isAdmin())) {
             return true;
         }
 
         return false;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
+
         ];
     }
 }

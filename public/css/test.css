@@ -499,3 +499,34 @@ ul a:hover,
 .auth {
     padding: 120px;
 }
+
+/* admin */
+
+.admin-sidebar li{
+    background: rgba(29, 58, 64, 0.5);
+    color: white;
+    padding: 15px;
+    list-style-type: none;
+    margin: 5px;
+}
+
+.admin-sidebar li:hover {
+    background: rgba(29, 58, 64, 0.9);
+}
+
+.admin-main {
+    background: rgba(29, 58, 64, 0.6);
+    color: white;
+    padding: 15px;
+    min-height: 900px;
+    margin-bottom: 150px;
+}
+
+.user-form {
+    width: 30%;
+    margin: 50px 0 0 50px;
+}
+
+.cms tr {
+    text-align: center;
+}

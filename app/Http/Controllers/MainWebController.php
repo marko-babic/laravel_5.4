@@ -2,27 +2,39 @@
 
 namespace L2\Http\Controllers;
 
-use L2\Navbar;
-use L2\Post;
+use L2\Repositories\NavbarRepository as Navbar;
+use L2\Repositories\PostRepository as Post;
 
 class MainWebController extends Controller
 {
+    private $post;
+    private $navbar;
+
+    public function __construct(Post $post, Navbar $navbar)
+    {
+        $this->post = $post;
+        $this->navbar = $navbar;
+    }
+
     public function index()
     {
         $data = [
-            'posts' => Post::where('description_id', 1)->orderBy('created_at','desc')->paginate(2),
+            'posts' => $this->post->getIndexPage(),
             'navActive' => '/'
         ];
 
-        return view('posts.index')->with($data);
+        return view('nav.main')->with($data);
     }
 
     public function generate($nav)
     {
-        $nav = Navbar::where('shortcode',$nav)->first();
+        $nav = $this->navbar->getShortcode($nav);
+
+        if(is_null($nav))
+            return redirect()->route('index');
 
         $data = [
-            'post' => Post::where('description_id', $nav->id)->orderBy('created_at','desc')->first(),
+            'post' => $this->post->getSubPage($nav->id),
             'navActive' => $nav->shortcode,
         ];
 
