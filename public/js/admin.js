@@ -16,38 +16,6 @@ function checkDelete(id) {
     }
 }
 
-/*
-function getPosts() {
-    var display =  $("#displayposts");
-    if(!display.is(':visible')) {
-        $.ajax({
-            type: 'GET',
-            url: ajax_admin_url.all_posts,
-            success: function (data) {
-                var posts_html = '';
-
-                data.forEach(function (post) {
-                    posts_html += '<div class="row">';
-                    posts_html += '<div class="col-md-5"> <ul> <a href="' + ajax_admin_url.all_posts + '/' + post.id + '/edit">' + post.title + '</a></ul></div>';
-                    posts_html += '<div class="col-md-5">' + '<ul>' + post.created_at + '</ul></div>';
-                    posts_html += '<div class="col-md-2"><span onClick="removePost(' + post.id  + ')" title="Remove post" class="remove-post glyphicon glyphicon-remove"> </span></div>';
-                    posts_html += '</div>';
-                });
-
-                display.html(posts_html);
-                display.show();
-            },
-            error: function () {
-                alert('Something not right.');
-            }
-        });
-    } else {
-        display.toggle();
-    }
-}
-
-*/
-
 function screenshotAction(id, action, text) {
     if (confirm('Really ' + text + ' ?')) {
         $.ajax({
@@ -90,8 +58,25 @@ function markAsRead(id) {
         },
         data: {id: id},
         url: ajax_admin_url.mark_as_read,
-        success: function (result) {
+        success: function () {
             $('[data-notification=' + id + ']').fadeOut();
+        }
+    });
+}
+
+function markAll() {
+    $.ajax({
+        type: "PUT",
+        headers: {
+            'X-CSRF-TOKEN': csrf_token
+        },
+        data: {id: 'all'},
+        url: ajax_admin_url.mark_as_read,
+        success: function (xhr) {
+            $('#notification-placeholder').html('');
+        },
+        error: function (xhr) {
+            alert(xhr.responseText);
         }
     });
 }
@@ -141,7 +126,7 @@ $(document).on('ready', function () {
         }
     });
 
-    $('.note-read').click(function () {
+    $(document).on("click",'.note-read',function () {
         markAsRead($(this).parent().data('notification'));
     });
 
@@ -158,6 +143,11 @@ $(document).on('ready', function () {
         } else {
             navRemove(id);
         }
+    });
+
+    $(document).on('click', '#markall', function(){
+       markAll();
+       // updateNotificationsData();
     });
 
     $('.navbar-add-form').submit(function(event){

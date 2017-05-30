@@ -179,6 +179,7 @@ return [
         L2\Providers\RouteServiceProvider::class,
         L2\Providers\CarouselProvider::class,
         L2\Providers\NavbarProvider::class,
+        L2\Providers\AdminNotificationProvider::class,
 
     ],
 

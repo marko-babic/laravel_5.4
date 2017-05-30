@@ -16,7 +16,7 @@ class TicketRepository extends Repository
 
     public function getById($id)
     {
-        return $this->model->find($id)->with(['user', 'topic', 'replies', 'status']);
+        return $this->model->with(['user', 'topic', 'replies', 'status'])->find($id);
     }
 
     public function getUserTickets()
@@ -27,5 +27,10 @@ class TicketRepository extends Repository
     public function canSubmit()
     {
         return $this->model->cansubmit();
+    }
+
+    public function doesntHave($r)
+    {
+        return $this->model->doesntHave($r)->where('status_id','!=',2)->get();
     }
 }

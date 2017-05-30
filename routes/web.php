@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function() {
     Route::get('','DashboardController@index')->name('dashboard');
     Route::resource('users', 'UserController');
@@ -20,7 +19,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function() {
     Route::get('cms','CmsController@index')->name('cms');
     Route::resource('posts', 'PostsController');
     Route::resource('navbar','NavbarController');
-    Route::put('notification', 'NotificationController@update')->name('notification');
+    Route::put('notification', 'NotificationController@update')->name('notification.update');
+    Route::get('notification','NotificationController@index')->name('notification.index');
 });
 
 Route::group(['prefix' => 'home'], function() {
@@ -35,7 +35,6 @@ Route::group(['prefix' => 'home'], function() {
 Route::get('/', 'MainWebController@index')->name('index');
 
 Auth::routes();
-
 
 Route::get('{nav}', ['uses' => 'MainWebController@generate'])->name('nav');
 

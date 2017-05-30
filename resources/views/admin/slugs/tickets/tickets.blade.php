@@ -10,6 +10,7 @@
                 <td> Topic </td>
                 <td> User </td>
                 <td> Created </td>
+                <td> Last post </td>
                 <td> Status </td>
                 <td> Actions </td>
             </tr>
@@ -25,6 +26,13 @@
                     </td>
                     <td>
                         {{$ticket->created_at->diffForHumans()}}
+                    </td>
+                    <td>
+                        @if($ticket->replies->count() > 0)
+                        {{$ticket->replies->last()->user->login}}
+                        @else
+                        {{$ticket->user->login}}
+                        @endif
                     </td>
                     <td>
                         <span class="{{Misc::ticketColor($ticket->status->text)}}">{{$ticket->status->text}}</span>

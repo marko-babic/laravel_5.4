@@ -435,7 +435,7 @@ a:hover, a:visited, a:active, a:link {
 }
 
 
-#deny, #approve, #vote, .note-read {
+#deny, #approve, #vote {
     cursor: pointer;
     margin-left: 20px;
 }
@@ -502,7 +502,7 @@ ul a:hover,
 
 /* admin */
 
-.admin-sidebar li{
+.admin-sidebar > ul li{
     background: rgba(29, 58, 64, 0.5);
     color: white;
     padding: 15px;
@@ -510,7 +510,7 @@ ul a:hover,
     margin: 5px;
 }
 
-.admin-sidebar li:hover {
+.admin-sidebar > ul li:hover {
     background: rgba(29, 58, 64, 0.9);
 }
 
@@ -529,4 +529,29 @@ ul a:hover,
 
 .cms tr {
     text-align: center;
+}
+
+.cms a:hover {
+    color: red;
+}
+
+#notification-placeholder {
+    font-size: 10px;
+    color: white;
+    margin-left: 25px;
+    line-height: 20px;
+}
+
+#notification-placeholder > ul li {
+    list-style-type: none;
+}
+
+#notification-placeholder #markall:hover {
+    color: red;
+    cursor: pointer;
+}
+
+#notification-placeholder .note-read {
+    cursor: pointer;
+    margin-left: 10px;
 }

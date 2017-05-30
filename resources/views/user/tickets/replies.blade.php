@@ -19,7 +19,7 @@
         @foreach($ticket->replies as $reply)
             <div class="element">
                 <u> Date : {{$reply->created_at}} </u>
-                <p class="ticket-text"> {{$reply->content}} </p>
+                <p class="ticket-text"> {!! $reply->content !!} </p>
                 <p class="text-right"> by: {{$reply->user->web->displayname}} </p>
             </div>
         @endforeach

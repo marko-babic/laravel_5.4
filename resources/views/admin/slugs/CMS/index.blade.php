@@ -3,19 +3,6 @@
 @section('admin_main')
     <div class="admin-main">
         <div class="news">
-            @if(count($unreadNotifications))
-                <div class="element title-adm"> notifications </div>
-                <div class="content">
-                    <ul>
-                        @foreach($unreadNotifications as $notification)
-                            <li data-notification="{{$notification->id}}">
-                                @include($notification["view"])
-                                <span class="glyphicon glyphicon-ok note-read" title="Mark as read"></span>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div class="element title-adm"> Navigation bar </div>
             <div class="row" style="padding: 20px;">
                 <div class="col-md-4">

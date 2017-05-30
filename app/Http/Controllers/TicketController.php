@@ -68,8 +68,10 @@ class TicketController extends Controller
         return view('user.tickets.replies')->with($data);
     }
 
-    public function destroy(Ticket $ticket)
+    public function destroy($id)
     {
+        $ticket = $this->ticket->getById($id);
+
         try {
             $ticket->delete();
         }

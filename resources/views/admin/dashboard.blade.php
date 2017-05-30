@@ -28,10 +28,10 @@
     <div id="app">
         <div class="container-fluid" style="margin-top: 20px">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     @include('admin.sidebar')
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     @yield('admin_main')
                 </div>
             </div>
@@ -44,6 +44,36 @@
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 <script src="{{ asset('js/functions.js') }}"></script>
 <script src="{{ asset('js/admin.js') }}"></script>
+
+    <script>
+        Echo.private('notify-admin')
+            .listen('.L2.Events.NewScreenshot', (e) => updateNotifications(e))
+            .listen('.L2.Events.NewTicket', (e) => updateNotifications(e))
+            .listen('.L2.Events.NewTicketReply', (e) => updateNotifications(e));
+
+            function updateNotifications(data) {
+                    updateNotificationsData();
+                }
+
+            function updateNotificationsData() {
+                    $.ajax({
+                        type: "GET",
+                        headers: {
+                            'X-CSRF-TOKEN': csrf_token
+                        },
+                        url: ajax_admin_url.notifications,
+                        success: function (data) {
+                            var test = '<ul>';
+                                $.each(data, function(key,value){
+                                    test += '<li data-notification="' + value.id + '">' + value.message + ' <span class="glyphicon glyphicon-ok note-read" title="Mark as read"></span></li>';
+                                });
+                            test += '<li><span id="markall">Mark all as read</span></li>';
+                            test += '</ul>';
+                            $('#notification-placeholder').html(test);
+                        }
+                    });
+            }
+    </script>
 
 @include('js.admin-variables')
 @include('js.variables')
